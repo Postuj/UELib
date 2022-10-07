@@ -1,0 +1,33 @@
+name: Api Test
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  backend_ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 17
+          cache: 'yarn'
+          cache-dependency-path: apps/api/yarn.lock
+      - run: corepack enable
+
+      - name: Install dependencies
+        working-directory: ./apps/api
+        run: yarn install --frozen-lockfile
+
+      - name: Run format
+        working-directory: ./apps/api
+        run: yarn format
+
+      - name: Run unit tests
+        working-directory: ./apps/api
+        run: yarn test
+        
+      - name: Run build
+        working-directory: ./apps/api
+        run: yarn build

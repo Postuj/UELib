@@ -1,3 +1,5 @@
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 
@@ -6,7 +8,8 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService],
+      imports: [JwtModule, ConfigModule],
+      providers: [AuthService, JwtService, ConfigService],
     }).compile();
 
     service = module.get<AuthService>(AuthService);

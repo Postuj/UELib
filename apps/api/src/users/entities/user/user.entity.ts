@@ -1,12 +1,8 @@
-import { AggregateRoot } from '@nestjs/cqrs';
+import { BaseEntity } from '../../../common/base.entity';
 
-export class User extends AggregateRoot {
-  constructor(protected readonly id: string, protected readonly email: string) {
-    super();
-  }
-
-  getId(): string {
-    return this.id;
+export class User extends BaseEntity {
+  constructor(id: string, protected readonly email: string) {
+    super(id);
   }
 
   getEmail(): string {

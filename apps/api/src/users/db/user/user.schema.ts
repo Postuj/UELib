@@ -14,9 +14,9 @@ export class UserSchema {
   @Column({ nullable: true })
   refreshTokenHash?: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({name: 'registered_at'})
   registeredAt: Date;
 
-  @CreateDateColumn()
+  @CreateDateColumn({name: 'updated_at'})
   updatedAt: Date;
 }

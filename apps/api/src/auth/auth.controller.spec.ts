@@ -1,3 +1,4 @@
+import { CqrsModule } from '@nestjs/cqrs';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -8,12 +9,11 @@ describe('AuthController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [CqrsModule],
       controllers: [AuthController],
-      providers: [AuthService],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
-    service = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
@@ -23,9 +23,6 @@ describe('AuthController', () => {
   // describe('register', () => {
 
   //   it('should register new user', () => {
-
-
-
 
   //   });
 

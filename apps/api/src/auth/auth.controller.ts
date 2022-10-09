@@ -1,15 +1,11 @@
 import { Controller, Post, UseGuards, Body, HttpCode, HttpStatus } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { Public } from 'src/common/public';
 import { JwtRefreshTokenAuthGuard } from './guards/jwtRefreshToken-auth.guard';
-import { GetUser } from 'src/users/decorators/user.decorator';
 import { CommandBus } from '@nestjs/cqrs';
 import { RegisterRequestDto } from './dto/register/register-request.dto';
 import { RegisterUserCommand } from './commands/register-user/register-user.command';
 import { RegisterResponseDto } from './dto/register/register-response.dto';
 import { RegisterUserCommandOutput } from './commands/register-user/register-user.handler';
-import { User } from 'src/users/entities/user/user.entity';
 import { RefreshAccessTokenRequestDto } from './dto/refresh-access-token/refresh-access-token-request.dto';
 import { RefreshAccessTokenCommand } from './commands/refresh-access-token/refresh-access-token.command';
 import { RefreshAccessTokenCommandOutput } from './commands/refresh-access-token/refresh-access-token.handler';
@@ -19,6 +15,9 @@ import { LoginUserCommandOutput } from './commands/login-user/login-user.handler
 import { LoginResponseDto } from './dto/login/login-response.dto';
 import { LoginRequestDto } from './dto/login/login-request.dto';
 import { LogoutUserCommand } from './commands/logout-user/logout-user.command';
+import { Public } from '../common/public'
+import { GetUser } from '../users/decorators/user.decorator'
+import { User } from '../users/entities/user/user.entity'
 
 @Controller('auth')
 export class AuthController {

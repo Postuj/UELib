@@ -1,10 +1,9 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BorrowedBookSchema } from 'src/books/db/borrowed-books/borrowed-book.schema';
+import { BaseSchema } from 'src/database/base.schema';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity('users')
-export class UserSchema {
-  @PrimaryGeneratedColumn('uuid')
-  readonly id: string;
-
+export class UserSchema extends BaseSchema {
   @Column()
   email: string;
 
@@ -14,9 +13,6 @@ export class UserSchema {
   @Column({ nullable: true })
   refreshTokenHash?: string;
 
-  @CreateDateColumn({name: 'registered_at'})
-  registeredAt: Date;
-
-  @CreateDateColumn({name: 'updated_at'})
-  updatedAt: Date;
+  @OneToMany(() => BorrowedBookSchema, (borrowedBook) => borrowedBook.borrowedBy)
+  borrowHistory: BorrowedBookSchema[];
 }

@@ -1,16 +1,11 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseSchema } from 'src/database/base.schema';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BookSchema } from '../book/book.schema';
 
 @Entity('genres')
-export class GenreSchema {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class GenreSchema extends BaseSchema {
   @Column()
   name: string;
-
-  @CreateDateColumn({ name: 'registered_at' })
-  registeredAt: Date;
 
   @OneToMany(() => BookSchema, (book) => book.genre)
   books: BookSchema[];

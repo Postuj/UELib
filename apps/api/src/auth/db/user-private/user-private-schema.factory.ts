@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EntitySchemaFactory } from 'src/database/entity-schema.factory';
 import { UserPrivate } from 'src/auth/entities/user-private/user-private.entity';
-import { User } from 'src/users/entities/user/user.entity';
 import { UserSchema } from '../../../users/db/user/user.schema';
 
 @Injectable()
@@ -11,9 +10,12 @@ export class UserPrivateSchemaFactory implements EntitySchemaFactory<UserSchema,
       id: user.getId(),
       email: user.getEmail(),
       passwordHash: user.getPasswordHash(),
-      registeredAt: user.getRegisteredAt(),
+      borrowHistory: [],
+      createdAt: user.getRegisteredAt(),
       updatedAt: user.getUpdatedAt(),
       refreshTokenHash: user.getRefreshTokenHash(),
+      deletedAt: null,
+      version: 0,
     };
   }
 
@@ -22,7 +24,7 @@ export class UserPrivateSchemaFactory implements EntitySchemaFactory<UserSchema,
       userSchema.id,
       userSchema.email,
       userSchema.passwordHash,
-      userSchema.registeredAt,
+      userSchema.createdAt,
       userSchema.updatedAt,
       userSchema.refreshTokenHash,
     );

@@ -9,11 +9,11 @@ export class GenreSchemaFactory implements EntitySchemaFactory<GenreSchema, Genr
     return {
       id: entity.getId(),
       name: entity.getName(),
-      registeredAt: entity.getRegisteredAt(),
+      createdAt: entity.getRegisteredAt(),
       books: [],
-    };
+    } as GenreSchema;
   }
   createFromSchema(entitySchema: GenreSchema): Genre {
-    return new Genre(entitySchema.id, entitySchema.name, entitySchema.registeredAt);
+    return new Genre(entitySchema.id, entitySchema.name, entitySchema.createdAt);
   }
 }

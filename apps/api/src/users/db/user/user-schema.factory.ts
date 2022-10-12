@@ -11,8 +11,11 @@ export class UserSchemaFactory implements EntitySchemaFactory<UserSchema, User> 
       id: user.getId(),
       email: user.getEmail(),
       passwordHash: '',
-      registeredAt: new Date(),
+      borrowHistory: [],
+      createdAt: new Date(),
       updatedAt: new Date(),
+      deletedAt: null,
+      version: 0,
     };
   }
 

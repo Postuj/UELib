@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { BookEntityRepository } from 'src/books/db/book/book-entity.repository';
-import { BookDtoFactory } from 'src/books/dto/book-dto.factory';
-import { BookDto } from 'src/books/dto/books-response.dto';
+import { BookDtoFactory } from 'src/books/dto/book/book-dto.factory';
+import { BookDto } from 'src/books/dto/book/books-response.dto';
 import { BooksQuery } from './books.query';
 
 @QueryHandler(BooksQuery)

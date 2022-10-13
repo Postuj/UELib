@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { BaseDtoFactory } from 'src/common/base-dto.factory';
-import { Book } from '../entities/book/book.entity';
+import { Book } from '../../entities/book/book.entity';
 import { BookDto } from './books-response.dto';
 
 @Injectable()

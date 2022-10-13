@@ -10,16 +10,16 @@ export class AuthorSchemaFactory implements EntitySchemaFactory<AuthorSchema, Au
       id: entity.getId(),
       name: entity.getName(),
       surname: entity.getSurname(),
-      registeredAt: entity.getRegisteredAt(),
+      createdAt: entity.getRegisteredAt(),
       books: [],
-    };
+    } as AuthorSchema;
   }
   createFromSchema(entitySchema: AuthorSchema): Author {
     return new Author(
       entitySchema.id,
       entitySchema.name,
       entitySchema.surname,
-      entitySchema.registeredAt,
+      entitySchema.createdAt,
     );
   }
 }

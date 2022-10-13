@@ -32,7 +32,7 @@ export class BookSchemaFactory implements EntitySchemaFactory<BookSchema, Book> 
       genre,
       entitySchema.description,
       entitySchema.publishedAt,
-      entitySchema.registeredAt,
+      entitySchema.createdAt,
     );
   }
 }

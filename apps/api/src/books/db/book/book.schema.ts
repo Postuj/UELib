@@ -1,19 +1,17 @@
+import { BaseSchema } from 'src/database/base.schema';
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
+  OneToMany,
 } from 'typeorm';
 import { AuthorSchema } from '../author/author.schema';
+import { BorrowedBookSchema } from '../borrowed-books/borrowed-book.schema';
 import { GenreSchema } from '../genre/genre.schema';
 
 @Entity('books')
-export class BookSchema {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class BookSchema extends BaseSchema {
   @Column()
   title: string;
 
@@ -34,9 +32,9 @@ export class BookSchema {
   @Column({ name: 'genre_id' })
   genreId: string;
 
-  @Column({ type: 'date', name: 'published_at' })
+  @Column({ type: 'timestamptz', name: 'published_at' })
   publishedAt: Date;
-
-  @CreateDateColumn({ name: 'registered_at' })
-  registeredAt: Date;
+  
+  @OneToMany(() => BorrowedBookSchema, (borrowedBook) => borrowedBook.borrowedBy)
+  borrowHistory: BorrowedBookSchema[];
 }

@@ -3,8 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Book } from 'src/books/entities/book/book.entity';
 import { BaseEntityRepository } from 'src/database/base-entity.repository';
 import { Repository } from 'typeorm';
-import { AuthorSchema } from '../author/author.schema';
-import { GenreSchema } from '../genre/genre.schema';
 import { BookSchemaFactory } from './book-schema.factory';
 import { BookSchema } from './book.schema';
 

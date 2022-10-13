@@ -1,0 +1,30 @@
+name: Mobile Test
+
+on:
+  pull_request:
+    branches: [ master ]
+    paths:
+      - apps/mobile/**
+
+jobs:
+  mobile_ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.3.4'
+          channel: 'stable'
+        
+      - name: Check version
+        working-directory: ./apps/mobile
+        run: flutter --version
+
+      - name: Install dependencies
+        working-directory: ./apps/mobile
+        run: flutter pub get
+
+      - name: Run unit tests
+        working-directory: ./apps/mobile
+        run: flutter test

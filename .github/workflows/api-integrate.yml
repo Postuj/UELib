@@ -3,9 +3,11 @@ name: Api Test
 on:
   pull_request:
     branches: [ master ]
+    paths:
+      - apps/api/**
 
 jobs:
-  backend_ci:
+  api_ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

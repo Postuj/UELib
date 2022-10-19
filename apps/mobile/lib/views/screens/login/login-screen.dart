@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/views/common/uelogo.dart';
-import 'package:mobile/views/screens/widgets/login-form.dart';
+import 'package:mobile/views/screens/login/widgets/login-form.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -25,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

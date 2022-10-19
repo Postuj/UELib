@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../common/or-separator.dart';
+import '../../../common/or-separator.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({

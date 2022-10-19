@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile/views/screens/home/home-screen.dart';
 import 'package:mobile/views/screens/login/login-screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Color(0xffEEEEEE),
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
   runApp(const UELibApp());
 }
 
 class UELibApp extends StatelessWidget {
   const UELibApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        fontFamily: 'Poppins',
+        fontFamily: 'Roboto',
         primaryColor: const Color(0xff1E1E1E),
         backgroundColor: const Color(0xffEEEEEE),
         colorScheme: ColorScheme.fromSwatch().copyWith(
@@ -24,22 +33,39 @@ class UELibApp extends StatelessWidget {
           tertiary: const Color(0xffE0AB20),
           background: const Color(0xffEEEEEE),
         ),
+        scaffoldBackgroundColor: const Color(0xffEEEEEE),
         textTheme: TextTheme(
-          headline4: GoogleFonts.poppins(
-            fontSize: 26.0,
+          headline6: GoogleFonts.roboto(
+            color: const Color(0xff1E1E1E),
+            fontSize: 20.0,
             fontWeight: FontWeight.w600,
           ),
-          bodyText1: GoogleFonts.poppins(
+          headline5: GoogleFonts.roboto(
+            color: const Color(0xff1E1E1E),
+            fontSize: 22.0,
+            fontWeight: FontWeight.w400,
+          ),
+          headline4: GoogleFonts.poppins(
+            color: const Color(0xff1E1E1E),
+            fontSize: 26.0,
+            fontWeight: FontWeight.w500,
+          ),
+          headline3: GoogleFonts.poppins(
+            color: const Color(0xff1E1E1E),
+            fontSize: 28.0,
+            fontWeight: FontWeight.w500,
+          ),
+          bodyText1: GoogleFonts.roboto(
             color: const Color(0xff1E1E1E),
             fontWeight: FontWeight.w500,
             fontSize: 14.0,
           ),
-          bodyText2: GoogleFonts.poppins(
+          bodyText2: GoogleFonts.roboto(
             color: const Color(0xff1E1E1E),
             fontWeight: FontWeight.w500,
             fontSize: 18.0,
           ),
-          button: GoogleFonts.poppins(
+          button: GoogleFonts.roboto(
             color: Colors.white,
             fontWeight: FontWeight.w500,
             fontSize: 18.0,
@@ -47,18 +73,28 @@ class UELibApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25.0),
-                ),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(25.0),
               ),
-              minimumSize: const Size(260.0, 55.0)),
+            ),
+            minimumSize: const Size(260.0, 55.0),
+          ),
+        ),
+        iconTheme: const IconThemeData(
+          color: Color(0xff1E1E1E),
         ),
         inputDecorationTheme: InputDecorationTheme(
           suffixIconColor: const Color(0xff1E1E1E),
+          prefixIconColor: const Color(0xff1E1E1E),
           focusColor: const Color(0xff1E1E1E),
-          labelStyle: GoogleFonts.poppins(
+          labelStyle: GoogleFonts.roboto(
             color: const Color(0xff1E1E1E),
+            fontWeight: FontWeight.w500,
+            fontSize: 18.0,
+          ),
+          hintStyle: GoogleFonts.roboto(
+            color: const Color(0xff686666),
             fontWeight: FontWeight.w500,
             fontSize: 18.0,
           ),
@@ -89,8 +125,27 @@ class UELibApp extends StatelessWidget {
             ),
           ),
         ),
+        listTileTheme: ListTileThemeData(
+          textColor: const Color(0xff1E1E1E),
+          iconColor: const Color(0xff1E1E1E),
+          tileColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: const Color(0xff1E1E1E),
+          foregroundColor: Colors.white,
+          extendedIconLabelSpacing: 25.0,
+          extendedPadding: const EdgeInsets.symmetric(horizontal: 30.0),
+          extendedTextStyle: GoogleFonts.roboto(
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+            fontSize: 18.0,
+          ),
+        ),
       ),
-      home: const LoginScreen(),
+      home: const HomeScreen(),
     );
   }
 }

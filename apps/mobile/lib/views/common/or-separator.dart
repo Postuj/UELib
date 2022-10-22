@@ -6,7 +6,7 @@ class OrSeparator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+      padding: const EdgeInsets.symmetric(horizontal: 100.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -14,7 +14,7 @@ class OrSeparator extends StatelessWidget {
           Expanded(
             child: Divider(
               height: 50.0,
-              thickness: 1.0,
+              thickness: 0.7,
               color: Theme.of(context).primaryColor,
             ),
           ),
@@ -28,7 +28,7 @@ class OrSeparator extends StatelessWidget {
           Expanded(
             child: Divider(
               height: 50.0,
-              thickness: 1.0,
+              thickness: 0.7,
               color: Theme.of(context).primaryColor,
             ),
           ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile/views/screens/borrow-book/borrow-book-screen.dart';
 import 'package:mobile/views/screens/home/home-screen.dart';
 import 'package:mobile/views/screens/login/login-screen.dart';
+import 'package:mobile/views/screens/scan-book/scan-book-screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +37,11 @@ class UELibApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: const Color(0xffEEEEEE),
         textTheme: TextTheme(
+          labelMedium: GoogleFonts.roboto(
+            color: const Color(0xff7D7777),
+            fontWeight: FontWeight.w300,
+            fontSize: 20.0,
+          ),
           headline6: GoogleFonts.roboto(
             color: const Color(0xff1E1E1E),
             fontSize: 20.0,
@@ -54,6 +61,11 @@ class UELibApp extends StatelessWidget {
             color: const Color(0xff1E1E1E),
             fontSize: 28.0,
             fontWeight: FontWeight.w500,
+          ),
+          headline2: GoogleFonts.poppins(
+            color: const Color(0xff1E1E1E),
+            fontSize: 60.0,
+            fontWeight: FontWeight.w300,
           ),
           bodyText1: GoogleFonts.roboto(
             color: const Color(0xff1E1E1E),

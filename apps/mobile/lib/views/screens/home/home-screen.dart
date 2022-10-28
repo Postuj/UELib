@@ -4,9 +4,6 @@ import 'package:mobile/views/screens/home/widgets/named-books-section.dart';
 import 'package:mobile/views/screens/home/widgets/recomendations.dart';
 import 'package:mobile/views/screens/home/widgets/top-bar.dart';
 
-import '../../styles/page_transitions.dart';
-import '../search/search-screen.dart';
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 

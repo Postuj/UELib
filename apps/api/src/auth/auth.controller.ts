@@ -31,11 +31,7 @@ export class AuthController {
     const tokens = await this.commandBus.execute<LoginUserCommand, LoginUserCommandOutput>(
       new LoginUserCommand(user.getId()),
     );
-    return {
-      id: user.getId(),
-      email: user.getEmail(),
-      ...tokens,
-    };
+    return tokens;
   }
 
   @Public()
@@ -43,12 +39,11 @@ export class AuthController {
   @Post('signup')
   async singUp(@Body() registerDto: RegisterRequestDto): Promise<RegisterResponseDto> {
     const { email, password } = registerDto;
-    const { user, tokens } = await this.commandBus.execute<
-      RegisterUserCommand,
-      RegisterUserCommandOutput
-    >(new RegisterUserCommand(email, password));
+    const tokens = await this.commandBus.execute<RegisterUserCommand, RegisterUserCommandOutput>(
+      new RegisterUserCommand(email, password),
+    );
 
-    return { id: user.getId(), email: user.getEmail(), ...tokens };
+    return tokens;
   }
 
   @Public()

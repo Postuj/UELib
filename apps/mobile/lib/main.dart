@@ -157,7 +157,7 @@ class UELibApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }

@@ -1,36 +1,29 @@
-import 'dart:convert';
+import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import 'package:mobile/features/books/data/models/book_dto.dart';
+import 'package:retrofit/http.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:mobile/core/data/sources/base_api.dart';
-import 'package:mobile/core/error/exception.dart';
-import 'package:mobile/features/books/data/factories/book_model_factory.dart';
-import 'package:mobile/features/books/data/models/book_model.dart';
+import '../../../../core/data/sources/env.dart';
 
+part 'books_api.g.dart';
+
+@injectable
+@RestApi(baseUrl: 'http://localhost:3000/books')
 abstract class BooksApi {
-  Future<BookModel> getBookById(String id);
-  Future<List<BookModel>> getAllBooks();
-  Future<List<BookModel>> getBooksByTitleOrAuthor(String titleOrAuthor);
-}
+  @factoryMethod
+  static BooksApi create(Dio dio) =>
+      _BooksApi(dio, baseUrl: '${Env.apiUrl}/books');
 
-class BooksApiImpl extends BaseApi<BookModel, BookModelFactory>
-    implements BooksApi {
-  BooksApiImpl(
-      {required http.Client client, required BookModelFactory bookModelFactory})
-      : super(
-            client: client, modelFactory: bookModelFactory, basePath: 'books');
+  factory BooksApi(Dio dio) => _BooksApi(dio);
 
-  @override
-  Future<List<BookModel>> getAllBooks() async {
-    return getManyFromPath('');
-  }
+  @GET('/{id}')
+  Future<BookDto> getBookById(@Path() String id);
 
-  @override
-  Future<BookModel> getBookById(String id) async {
-    return getOneFromPath(id);
-  }
+  @GET('')
+  Future<List<BookDto>> getAllBooks();
 
-  @override
-  Future<List<BookModel>> getBooksByTitleOrAuthor(String titleOrAuthor) async {
-    return getManyFromPath('?titleOrAuthor=$titleOrAuthor');
-  }
+  @GET('')
+  Future<List<BookDto>> getBooksByTitleOrAuthor(
+    @Query('titleOrAuthor') String titleOrAuthor,
+  );
 }

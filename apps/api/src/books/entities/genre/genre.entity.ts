@@ -1,4 +1,4 @@
-import { BaseEntity } from '../../../common/base.entity';
+import { BaseEntity } from '../../../core/base.entity';
 import { Book } from '../book/book.entity';
 
 export class Genre extends BaseEntity {

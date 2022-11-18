@@ -5,5 +5,5 @@ import '../entities/book.dart';
 
 abstract class BooksRepository {
   Future<Either<Failure, Book>> getBookById(String id);
-  Future<Either<Failure, List<Book>>> getBooks([String? titleOrAuthor]);
+  Future<Either<Failure, List<Book>>> getBooks({String? titleOrAuthor});
 }

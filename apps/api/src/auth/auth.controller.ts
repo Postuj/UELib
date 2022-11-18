@@ -15,7 +15,7 @@ import { LoginUserCommandOutput } from './commands/login-user/login-user.handler
 import { LoginResponseDto } from './dto/login/login-response.dto';
 import { LoginRequestDto } from './dto/login/login-request.dto';
 import { LogoutUserCommand } from './commands/logout-user/logout-user.command';
-import { Public } from '../common/public';
+import { Public } from '../core/public';
 import { GetUser } from '../users/decorators/user.decorator';
 import { User } from '../users/entities/user/user.entity';
 

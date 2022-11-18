@@ -1,6 +1,6 @@
 import { Book } from '../../../books/entities/book/book.entity';
 import { BookBorrowedEvent } from '../../../books/events/book-borrowed/book-borrowed.event';
-import { BaseEntity } from '../../../common/base.entity';
+import { BaseEntity } from '../../../core/base.entity';
 
 export class User extends BaseEntity {
   constructor(id: string, protected readonly email: string) {

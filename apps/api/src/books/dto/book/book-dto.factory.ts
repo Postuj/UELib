@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BaseDtoFactory } from 'src/common/base-dto.factory';
+import { BaseDtoFactory } from 'src/core/base-dto.factory';
 import { Book } from '../../entities/book/book.entity';
 import { BookDto } from './books-response.dto';
 
@@ -12,7 +12,7 @@ export class BookDtoFactory implements BaseDtoFactory<Book, BookDto> {
       id: entity.getId(),
       title: entity.getTitle(),
       description: entity.getDescription(),
-      publishedDate: entity.getPublishedAt(),
+      publishedAt: entity.getPublishedAt(),
       author: {
         id: authorEntity.getId(),
         name: authorEntity.getName(),

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserPrivateEntityRepository } from 'src/auth/db/user-private/user-private-entity.repository';
-import { EntityFactory } from 'src/database/entity.factory';
+import { EntityFactory } from 'src/core/entity.factory';
 import { UserPrivate } from './user-private.entity';
 import * as bcrypt from 'bcrypt';
 

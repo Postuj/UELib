@@ -1,5 +1,6 @@
-import 'package:mobile/core/domain/entities/base_entity.dart';
+import 'package:mobile/core/data/models/dto.dart';
+import 'package:mobile/core/domain/entities/entity.dart';
 
-abstract class EntityFactory<TEntity extends BaseEntity, TModel> {
-  TEntity fromModel(TModel model);
+abstract class EntityFactory<TEntity extends Entity, TDto extends Dto> {
+  TEntity fromDto(TDto dto);
 }

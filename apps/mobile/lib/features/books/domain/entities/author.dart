@@ -1,7 +1,6 @@
-import 'package:equatable/equatable.dart';
 import 'package:mobile/core/domain/entities/identifiable_entity.dart';
 
-class Author extends IdentifiableEntity with EquatableMixin {
+class Author extends IdentifiableEntity {
   final String name;
   final String surname;
 

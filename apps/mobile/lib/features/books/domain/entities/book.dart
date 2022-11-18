@@ -1,10 +1,9 @@
-import 'package:equatable/equatable.dart';
 import 'package:mobile/core/domain/entities/identifiable_entity.dart';
 
 import 'author.dart';
 import 'genre.dart';
 
-class Book extends IdentifiableEntity with EquatableMixin {
+class Book extends IdentifiableEntity {
   final String title;
   final String? description;
   final DateTime publishedAt;

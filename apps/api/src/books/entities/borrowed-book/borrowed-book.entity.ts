@@ -1,4 +1,4 @@
-import { BaseEntity } from 'src/common/base.entity';
+import { BaseEntity } from 'src/core/base.entity';
 import { User } from 'src/users/entities/user/user.entity';
 import { Book } from '../book/book.entity';
 

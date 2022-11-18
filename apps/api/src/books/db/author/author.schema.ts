@@ -1,5 +1,5 @@
 import { BaseSchema } from 'src/database/base.schema';
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { BookSchema } from '../book/book.schema';
 
 @Entity('authors')

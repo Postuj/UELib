@@ -1,20 +1,28 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile/di/injection.dart';
 import 'package:mobile/features/books/domain/entities/author.dart';
 import 'package:mobile/features/books/domain/entities/book.dart';
 import 'package:mobile/features/books/domain/entities/genre.dart';
-import 'package:mobile/features/books/domain/usecases/get_book_by_id.dart';
+import 'package:mobile/features/books/domain/repositories/books_repository.dart';
+import 'package:mobile/features/books/domain/usecases/get_book_by_id_usecase.dart';
 import 'package:mockito/mockito.dart';
 
-import '../repositories/books_repository_impl_test.mocks.dart';
+import '../../../../core/di/test_env_injection.dart';
+import '../../../../core/test_env_setup.dart';
 
 void main() {
-  late GetBookById usecase;
-  late MockBooksRepository mockBooksRepository;
+  late GetBookByIdUsecase usecase;
+  late BooksRepository mockBooksRepository;
+
+  setUpAll(() async {
+    await loadTestEnvVars();
+    configureTestDependencyInjection();
+  });
 
   setUp(() {
-    mockBooksRepository = MockBooksRepository();
-    usecase = GetBookById(repository: mockBooksRepository);
+    mockBooksRepository = getIt<BooksRepository>();
+    usecase = GetBookByIdUsecase(repository: mockBooksRepository);
   });
 
   const tBookId = '123';
@@ -34,7 +42,7 @@ void main() {
       when(mockBooksRepository.getBookById(tBookId))
           .thenAnswer((_) async => Right(tBook));
       // act
-      final result = await usecase.call(const Params(id: tBookId));
+      final result = await usecase(const GetBookByIdParams(id: tBookId));
       // assert
       expect(result, Right(tBook));
       verify(mockBooksRepository.getBookById(tBookId));

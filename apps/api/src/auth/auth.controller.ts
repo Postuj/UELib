@@ -15,7 +15,7 @@ import { LoginUserCommandOutput } from './commands/login-user/login-user.handler
 import { LoginResponseDto } from './dto/login/login-response.dto';
 import { LoginRequestDto } from './dto/login/login-request.dto';
 import { LogoutUserCommand } from './commands/logout-user/logout-user.command';
-import { Public } from '../common/public';
+import { Public } from '../core/public';
 import { GetUser } from '../users/decorators/user.decorator';
 import { User } from '../users/entities/user/user.entity';
 
@@ -31,11 +31,7 @@ export class AuthController {
     const tokens = await this.commandBus.execute<LoginUserCommand, LoginUserCommandOutput>(
       new LoginUserCommand(user.getId()),
     );
-    return {
-      id: user.getId(),
-      email: user.getEmail(),
-      ...tokens,
-    };
+    return tokens;
   }
 
   @Public()
@@ -43,12 +39,11 @@ export class AuthController {
   @Post('signup')
   async singUp(@Body() registerDto: RegisterRequestDto): Promise<RegisterResponseDto> {
     const { email, password } = registerDto;
-    const { user, tokens } = await this.commandBus.execute<
-      RegisterUserCommand,
-      RegisterUserCommandOutput
-    >(new RegisterUserCommand(email, password));
+    const tokens = await this.commandBus.execute<RegisterUserCommand, RegisterUserCommandOutput>(
+      new RegisterUserCommand(email, password),
+    );
 
-    return { id: user.getId(), email: user.getEmail(), ...tokens };
+    return tokens;
   }
 
   @Public()

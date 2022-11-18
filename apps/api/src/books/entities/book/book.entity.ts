@@ -1,4 +1,4 @@
-import { BaseEntity } from '../../../common/base.entity';
+import { BaseEntity } from '../../../core/base.entity';
 import { Author } from '../author/author.entity';
 import { Genre } from '../genre/genre.entity';
 

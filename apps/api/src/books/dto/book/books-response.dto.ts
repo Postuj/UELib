@@ -2,7 +2,7 @@ export class BookDto {
   id: string;
   title: string;
   description?: string;
-  publishedDate: Date;
+  publishedAt: Date;
   author: {
     id: string;
     name: string;

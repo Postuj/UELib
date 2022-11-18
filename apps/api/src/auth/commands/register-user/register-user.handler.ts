@@ -4,15 +4,11 @@ import { AuthService } from 'src/auth/auth.service';
 import { UserPrivateEntityRepository } from 'src/auth/db/user-private/user-private-entity.repository';
 import { UserPrivate } from 'src/auth/entities/user-private/user-private.entity';
 import { UserPrivateFactory } from 'src/auth/entities/user-private/user-private.factory';
-import { User } from 'src/users/entities/user/user.entity';
 import { RegisterUserCommand } from './register-user.command';
 
 export type RegisterUserCommandOutput = {
-  user: User;
-  tokens: {
-    accessToken: string;
-    refreshToken: string;
-  };
+  accessToken: string;
+  refreshToken: string;
 };
 
 @CommandHandler(RegisterUserCommand)
@@ -34,9 +30,9 @@ export class RegisterUserHandler implements ICommandHandler<RegisterUserCommand>
     const tokens = await this.authService.createAccessAndRefreshTokens(user.getId(), email);
 
     await user.setRefreshTokenHash(tokens.refreshToken);
-    user.commit()
+    user.commit();
 
-    return { user: user.mapToUser(), tokens };
+    return tokens;
   }
 
   private async checkIfEmailIsOccupied(email: string): Promise<void> {

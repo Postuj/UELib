@@ -14,12 +14,15 @@ import { BorrowedBookSchemaFactory } from './db/borrowed-books/borrowed-book-sch
 import { BorrowedBookSchema } from './db/borrowed-books/borrowed-book.schema';
 import { GenreSchemaFactory } from './db/genre/genre-schema.factory';
 import { GenreSchema } from './db/genre/genre.schema';
+import { BookWithAvailabilityDtoFactory } from './dto/book-with-availability/book-with-availability-dto.factory';
 import { BookDtoFactory } from './dto/book/book-dto.factory';
+import { BookWithAvailabilityFactory } from './entities/book-with-availability/book-with-availability.factory';
 import { BorrowedBookFactory } from './entities/borrowed-book/borrowed-book.factory';
 import { BookBorrowedHandler } from './events/book-borrowed/book-borrowed.handler';
+import { BookWithAvailabilityQueryHandler } from './queries/book-with-availability/book-with-availability.handler';
 import { BooksQueryHandler } from './queries/books/books.handler';
 
-const queryHandlers = [BooksQueryHandler];
+const queryHandlers = [BooksQueryHandler, BookWithAvailabilityQueryHandler];
 const commandHandlers = [BorrowBookHandler];
 const eventHandlers = [BookBorrowedHandler];
 
@@ -38,6 +41,8 @@ const eventHandlers = [BookBorrowedHandler];
     BorrowedBookFactory,
     AuthorSchemaFactory,
     GenreSchemaFactory,
+    BookWithAvailabilityFactory,
+    BookWithAvailabilityDtoFactory,
     ...queryHandlers,
     ...commandHandlers,
     ...eventHandlers,

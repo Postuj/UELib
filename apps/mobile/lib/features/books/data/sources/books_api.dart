@@ -4,6 +4,7 @@ import 'package:mobile/features/books/data/models/book_dto.dart';
 import 'package:retrofit/http.dart';
 
 import '../../../../core/data/sources/env.dart';
+import '../models/book_with_availability_dto.dart';
 
 part 'books_api.g.dart';
 
@@ -26,4 +27,8 @@ abstract class BooksApi {
   Future<List<BookDto>> getBooksByTitleOrAuthor(
     @Query('titleOrAuthor') String titleOrAuthor,
   );
+
+  @GET('/:id/with-availability')
+  Future<BookWithAvailabilityDto> getBookWithAvailabilityById(
+      @Path() String id);
 }

@@ -1,7 +1,7 @@
-import { BaseEntity } from '../../../core/base.entity';
+import { IdentifiableEntity } from 'src/core/identifiable.entity';
 import { Book } from '../book/book.entity';
 
-export class Genre extends BaseEntity {
+export class Genre extends IdentifiableEntity {
   constructor(
     id: string,
     private readonly name: string,

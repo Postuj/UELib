@@ -1,8 +1,8 @@
-import { BaseEntity } from 'src/core/base.entity';
+import { IdentifiableEntity } from 'src/core/identifiable.entity';
 import { User } from 'src/users/entities/user/user.entity';
 import { Book } from '../book/book.entity';
 
-export class BorrowedBook extends BaseEntity {
+export class BorrowedBook extends IdentifiableEntity {
   constructor(
     id: string,
     private book: Book,

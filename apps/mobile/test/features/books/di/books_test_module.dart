@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mobile/di/injection.dart';
 import 'package:mobile/features/books/domain/repositories/books_repository.dart';
 import 'package:mobile/features/books/domain/usecases/get_book_by_id_usecase.dart';
+import 'package:mobile/features/books/domain/usecases/get_book_with_availability_usecase.dart';
 import 'package:mobile/features/books/domain/usecases/get_books_by_title_or_author_usecase.dart';
 import 'package:mockito/annotations.dart';
 
@@ -9,6 +10,7 @@ import 'package:mockito/annotations.dart';
   MockSpec<BooksRepository>(),
   MockSpec<GetBooksByTitleOrAuthorUsecase>(),
   MockSpec<GetBookByIdUsecase>(),
+  MockSpec<GetBookWithAvailabilityUsecase>(),
 ])
 import 'books_test_module.mocks.dart';
 
@@ -21,4 +23,7 @@ abstract class BooksTestModule {
       MockGetBooksByTitleOrAuthorUsecase();
   @testEnv
   GetBookByIdUsecase get getBookByIdUsecase => MockGetBookByIdUsecase();
+  @testEnv
+  GetBookWithAvailabilityUsecase get getBookWithAvailabilityUsecase =>
+      MockGetBookWithAvailabilityUsecase();
 }

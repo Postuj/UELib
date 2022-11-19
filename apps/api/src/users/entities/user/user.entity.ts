@@ -1,8 +1,8 @@
+import { IdentifiableEntity } from '../../../core/identifiable.entity';
 import { Book } from '../../../books/entities/book/book.entity';
 import { BookBorrowedEvent } from '../../../books/events/book-borrowed/book-borrowed.event';
-import { BaseEntity } from '../../../core/base.entity';
 
-export class User extends BaseEntity {
+export class User extends IdentifiableEntity {
   constructor(id: string, protected readonly email: string) {
     super(id);
   }

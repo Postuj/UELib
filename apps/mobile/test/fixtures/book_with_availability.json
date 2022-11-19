@@ -1,0 +1,18 @@
+{
+    "id": "123",
+    "title": "Test",
+    "description": null,
+    "publishedAt": "2022-10-23T00:00:00.000",
+    "author": {
+      "id": "123",
+      "name": "Test",
+      "surname": "Author"
+    },
+    "genre": {
+      "id": "123",
+      "name": "Test"
+    },
+    "isAvailable": true,
+    "plannedDateOfReturn": null
+  }
+  

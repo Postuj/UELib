@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { BaseDtoFactory } from 'src/core/base-dto.factory';
+import { DtoFactory } from 'src/core/dto.factory';
 import { Book } from '../../entities/book/book.entity';
 import { BookDto } from './books-response.dto';
 
 @Injectable()
-export class BookDtoFactory implements BaseDtoFactory<Book, BookDto> {
+export class BookDtoFactory implements DtoFactory<Book, BookDto> {
   createFromEntity(entity: Book): BookDto {
     const authorEntity = entity.getAuthor();
     const genreEntity = entity.getGenre();

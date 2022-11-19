@@ -1,6 +1,6 @@
-import { AggregateRoot } from '@nestjs/cqrs';
+import { Entity } from './entity';
 
-export abstract class BaseEntity extends AggregateRoot {
+export abstract class IdentifiableEntity extends Entity {
   constructor(protected readonly id: string) {
     super();
   }

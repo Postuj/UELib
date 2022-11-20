@@ -44,10 +44,10 @@ app.*.map.json
 /android/app/release
 
 # Generated files
-**/*.g.dart
-**/*.gr.dart
-**/*.config.dart
-**/*.mocks.dart
+# **/*.g.dart
+# **/*.gr.dart
+# **/*.config.dart
+# **/*.mocks.dart
 
 # Environment variables
 .env.prod

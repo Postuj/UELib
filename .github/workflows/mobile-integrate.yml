@@ -21,10 +21,6 @@ jobs:
         working-directory: ./apps/mobile
         run: flutter pub get
 
-      - name: Generate files
-        working-directory: ./apps/mobile
-        run: flutter pun run build_runner build --delete-conflicting-outputs
-
       - name: Run unit tests
         working-directory: ./apps/mobile
         run: flutter test

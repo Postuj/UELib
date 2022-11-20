@@ -3,6 +3,7 @@ import 'package:mobile/core/data/sources/dio/error/not_found_error.dart';
 import 'package:mobile/features/books/data/factories/book_entity_factory.dart';
 import 'package:mobile/features/books/data/factories/book_with_availability_entity_factory.dart';
 import 'package:mobile/features/books/data/sources/books_api.dart';
+import 'package:mobile/features/books/data/sources/requests/borrow_book_request.dart';
 import 'package:mobile/features/books/domain/entities/book.dart';
 import 'package:mobile/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
@@ -57,6 +58,22 @@ class BooksRepositoryImpl implements BooksRepository {
     try {
       final result = await _booksApi.getBookWithAvailabilityById(id);
       return Right(_bookEntityWithAvailabilityFactory.fromDto(result));
+    } on NotFoundError catch (_) {
+      return Left(ServerResourceNotFoundFailure());
+    } catch (_) {
+      return Left(ServerUnexpectedFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> borrowBook({
+    required String id,
+    required DateTime plannedDateOfReturn,
+  }) async {
+    try {
+      await _booksApi.borrowBook(
+          id, BorrowBookRequest(plannedDateOfReturn: plannedDateOfReturn));
+      return const Right(null);
     } on NotFoundError catch (_) {
       return Left(ServerResourceNotFoundFailure());
     } catch (_) {

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from 'src/users/users.module';
+import { BookController } from './book.controller';
 import { BooksController } from './books.controller';
 import { BorrowBookHandler } from './commands/borrow-book/borrow-book.handler';
 import { AuthorSchemaFactory } from './db/author/author-schema.factory';
@@ -47,6 +48,6 @@ const eventHandlers = [BookBorrowedHandler];
     ...commandHandlers,
     ...eventHandlers,
   ],
-  controllers: [BooksController],
+  controllers: [BooksController, BookController],
 })
 export class BooksModule {}

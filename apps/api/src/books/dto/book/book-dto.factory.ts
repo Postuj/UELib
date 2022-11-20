@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DtoFactory } from 'src/core/dto.factory';
 import { Book } from '../../entities/book/book.entity';
-import { BookDto } from './books-response.dto';
+import { BookDto } from './book.dto';
 
 @Injectable()
 export class BookDtoFactory implements DtoFactory<Book, BookDto> {

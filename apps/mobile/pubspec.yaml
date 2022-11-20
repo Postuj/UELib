@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   google_fonts: ^3.0.1
   flutter_svg_provider: ^1.0.3
   qr_code_scanner: ^1.0.1
@@ -31,6 +30,8 @@ dependencies:
   jwt_decoder: ^2.0.1
   flutter_dotenv: ^5.0.2
   auto_route: ^5.0.2
+  string_validator: ^0.3.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

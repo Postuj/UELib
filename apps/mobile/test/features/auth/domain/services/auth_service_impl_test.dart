@@ -146,9 +146,11 @@ void main() {
       final result = await service.logOut();
       // assert
       expect(result, const Right(null));
-      verify(storage.deleteAll());
+      verify(storage.write(key: 'accessToken', value: '123'));
+      verify(storage.write(key: 'refreshToken', value: '123'));
       verify(storage.read(key: 'accessToken'));
       verify(storage.read(key: 'refreshToken'));
+      verify(storage.deleteAll());
       verifyNoMoreInteractions(storage);
     }));
   });

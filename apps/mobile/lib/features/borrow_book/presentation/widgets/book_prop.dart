@@ -17,9 +17,13 @@ class BookProp extends StatelessWidget {
             label,
             style: Theme.of(context).textTheme.labelMedium,
           ),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.headline6,
+          SizedBox(
+            width: 260,
+            child: Text(
+              value,
+              style: Theme.of(context).textTheme.headline6,
+              textAlign: TextAlign.right,
+            ),
           )
         ],
       ),

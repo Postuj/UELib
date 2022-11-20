@@ -137,4 +137,33 @@ void main() {
       expect(result, Left(ServerResourceNotFoundFailure()));
     });
   });
+
+  group('borrowBook', () {
+    const tBookId = '123';
+    final tPlannedDateOfReturn = DateTime.now();
+    test('shouldn not return anything from API', () async {
+      // arrange
+      dio.interceptors.add(MockSuccessApiResponseInterceptor());
+      // act
+      final result = await repository.borrowBook(
+        id: tBookId,
+        plannedDateOfReturn: tPlannedDateOfReturn,
+      );
+      // assert
+      expect(result, const Right(null));
+    });
+
+    test('should return ServerResourceNotFoundFailure on NotFoundError',
+        () async {
+      // arrange
+      setUpApiErrorResponse(404);
+      // act
+      final result = await repository.borrowBook(
+        id: tBookId,
+        plannedDateOfReturn: tPlannedDateOfReturn,
+      );
+      // assert
+      expect(result, Left(ServerResourceNotFoundFailure()));
+    });
+  });
 }

@@ -21,7 +21,7 @@ class AuthInterceptor extends Interceptor {
 
     if (requiresAuth) {
       try {
-        _applyAccessToken(options);
+        await _applyAccessToken(options);
       } on GetAccessTokenException catch (_) {
         handler.reject(UnauthorizedError(requestOptions: options));
         return;
@@ -31,7 +31,7 @@ class AuthInterceptor extends Interceptor {
     return super.onRequest(options, handler);
   }
 
-  void _applyAccessToken(RequestOptions options) async {
+  Future<void> _applyAccessToken(RequestOptions options) async {
     final result = await _authService.getAccessToken();
     final accessToken = result.fold(
       (l) => throw GetAccessTokenException(),

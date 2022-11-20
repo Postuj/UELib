@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobile/features/books/data/models/book_dto.dart';
+import 'package:mobile/features/books/data/sources/requests/borrow_book_request.dart';
 import 'package:retrofit/http.dart';
 
 import '../../../../core/data/sources/env.dart';
@@ -28,7 +29,11 @@ abstract class BooksApi {
     @Query('titleOrAuthor') String titleOrAuthor,
   );
 
-  @GET('/:id/with-availability')
+  @GET('/{id}/with-availability')
   Future<BookWithAvailabilityDto> getBookWithAvailabilityById(
-      @Path() String id);
+      @Path('id') String id);
+
+  @POST('/{id}/borrow')
+  Future<void> borrowBook(
+      @Path('id') String id, @Body() BorrowBookRequest request);
 }

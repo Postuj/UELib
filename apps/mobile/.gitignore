@@ -43,6 +43,12 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Generated files
+# **/*.g.dart
+# **/*.gr.dart
+# **/*.config.dart
+# **/*.mocks.dart
+
 # Environment variables
 .env.prod
 

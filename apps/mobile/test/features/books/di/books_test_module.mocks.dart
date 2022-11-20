@@ -138,6 +138,46 @@ class MockBooksRepository extends _i1.Mock implements _i3.BooksRepository {
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i7.BookWithAvailability>>);
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, void>> borrowBook({
+    required String? id,
+    required DateTime? plannedDateOfReturn,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #borrowBook,
+          [],
+          {
+            #id: id,
+            #plannedDateOfReturn: plannedDateOfReturn,
+          },
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+            _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #borrowBook,
+            [],
+            {
+              #id: id,
+              #plannedDateOfReturn: plannedDateOfReturn,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, void>>.value(
+                _FakeEither_0<_i5.Failure, void>(
+          this,
+          Invocation.method(
+            #borrowBook,
+            [],
+            {
+              #id: id,
+              #plannedDateOfReturn: plannedDateOfReturn,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
 }
 
 /// A class which mocks [GetBooksByTitleOrAuthorUsecase].

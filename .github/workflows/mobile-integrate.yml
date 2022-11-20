@@ -17,10 +17,6 @@ jobs:
           flutter-version: '3.3.4'
           channel: 'stable'
         
-      - name: Check version
-        working-directory: ./apps/mobile
-        run: flutter --version
-
       - name: Install dependencies
         working-directory: ./apps/mobile
         run: flutter pub get

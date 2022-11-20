@@ -1,4 +1,4 @@
-import { BookDto } from '../book/books-response.dto';
+import { BookDto } from '../book/book.dto';
 
 export class BookWithAvailabilityDto extends BookDto {
   isAvailable: boolean;

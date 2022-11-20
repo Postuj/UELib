@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BookWithAvailability } from 'src/books/entities/book-with-availability/book-with-availability.entity';
 import { DtoFactory } from 'src/core/dto.factory';
 import { BookDtoFactory } from '../book/book-dto.factory';
-import { BookWithAvailabilityDto } from './book-with-availability-response.dto';
+import { BookWithAvailabilityDto } from './book-with-availability.dto';
 
 @Injectable()
 export class BookWithAvailabilityDtoFactory

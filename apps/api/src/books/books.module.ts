@@ -17,13 +17,19 @@ import { GenreSchemaFactory } from './db/genre/genre-schema.factory';
 import { GenreSchema } from './db/genre/genre.schema';
 import { BookWithAvailabilityDtoFactory } from './dto/book-with-availability/book-with-availability-dto.factory';
 import { BookDtoFactory } from './dto/book/book-dto.factory';
+import { BorrowedBookDtoFactory } from './dto/borrow-book/borrowed-book-dto.factory';
 import { BookWithAvailabilityFactory } from './entities/book-with-availability/book-with-availability.factory';
 import { BorrowedBookFactory } from './entities/borrowed-book/borrowed-book.factory';
 import { BookBorrowedHandler } from './events/book-borrowed/book-borrowed.handler';
 import { BookWithAvailabilityQueryHandler } from './queries/book-with-availability/book-with-availability.handler';
 import { BooksQueryHandler } from './queries/books/books.handler';
+import { CurrentlyBorrowedBooksHandler } from './queries/currently-borrowed-books/currently-borrowed-books.handler';
 
-const queryHandlers = [BooksQueryHandler, BookWithAvailabilityQueryHandler];
+const queryHandlers = [
+  BooksQueryHandler,
+  BookWithAvailabilityQueryHandler,
+  CurrentlyBorrowedBooksHandler,
+];
 const commandHandlers = [BorrowBookHandler];
 const eventHandlers = [BookBorrowedHandler];
 
@@ -40,6 +46,7 @@ const eventHandlers = [BookBorrowedHandler];
     BorrowedBookEntityRepository,
     BorrowedBookSchemaFactory,
     BorrowedBookFactory,
+    BorrowedBookDtoFactory,
     AuthorSchemaFactory,
     GenreSchemaFactory,
     BookWithAvailabilityFactory,

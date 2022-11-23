@@ -23,12 +23,14 @@ import { BorrowedBookFactory } from './entities/borrowed-book/borrowed-book.fact
 import { BookBorrowedHandler } from './events/book-borrowed/book-borrowed.handler';
 import { BookWithAvailabilityQueryHandler } from './queries/book-with-availability/book-with-availability.handler';
 import { BooksQueryHandler } from './queries/books/books.handler';
+import { BorrowingHistoryHandler } from './queries/borrow-history/borrowing-history.handler';
 import { CurrentlyBorrowedBooksHandler } from './queries/currently-borrowed-books/currently-borrowed-books.handler';
 
 const queryHandlers = [
   BooksQueryHandler,
   BookWithAvailabilityQueryHandler,
   CurrentlyBorrowedBooksHandler,
+  BorrowingHistoryHandler,
 ];
 const commandHandlers = [BorrowBookHandler];
 const eventHandlers = [BookBorrowedHandler];

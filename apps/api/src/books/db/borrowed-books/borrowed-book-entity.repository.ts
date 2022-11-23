@@ -38,6 +38,17 @@ export class BorrowedBookEntityRepository extends BaseEntityRepository<
     );
   }
 
+  async findUserPastBookBorrowings(userId: string): Promise<BorrowedBook[]> {
+    const borrowedBooks = await this.entityRepo.findBy({
+      borrowedById: userId,
+      returnedAt: Not(IsNull()),
+    });
+
+    return await borrowedBooks.map((borrowedBook) =>
+      this.entitySchemaFactory.createFromSchema(borrowedBook),
+    );
+  }
+
   async create(borrowedBook: BorrowedBook): Promise<BorrowedBook> {
     const borrowedBookSchema = await this.entityRepo.save(
       this.entityRepo.create({

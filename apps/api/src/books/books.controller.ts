@@ -6,9 +6,11 @@ import { BookWithAvailabilityDtoFactory } from './dto/book-with-availability/boo
 import { BookDtoFactory } from './dto/book/book-dto.factory';
 import { BookDto } from './dto/book/book.dto';
 import { BorrowedBookDtoFactory } from './dto/borrow-book/borrowed-book-dto.factory';
+import { BorrowedBookDto } from './dto/borrow-book/borrowed-book.dto';
 import { Book } from './entities/book/book.entity';
 import { BorrowedBook } from './entities/borrowed-book/borrowed-book.entity';
 import { BooksQuery } from './queries/books/books.query';
+import { BorrowingHistoryQuery } from './queries/borrow-history/borrowing-history.query';
 import { CurrentlyBorrowedBooksQuery } from './queries/currently-borrowed-books/currently-borrowed-books.query';
 
 @Controller('books')
@@ -28,9 +30,18 @@ export class BooksController {
 
   @HttpCode(HttpStatus.OK)
   @Get('currently-borrowed')
-  async getUserCurrentlyBorrowedBooks(@GetUser() user: User): Promise<BookDto[]> {
+  async getUserCurrentlyBorrowedBooks(@GetUser() user: User): Promise<BorrowedBookDto[]> {
     const borrowedBooks = await this.queryBus.execute<CurrentlyBorrowedBooksQuery, BorrowedBook[]>(
       new CurrentlyBorrowedBooksQuery(user.getId()),
+    );
+    return borrowedBooks.map((book) => this.borrowedBookDtoFactory.createFromEntity(book));
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Get('history')
+  async getUserBorrowigHistory(@GetUser() user: User): Promise<BorrowedBookDto[]> {
+    const borrowedBooks = await this.queryBus.execute<BorrowingHistoryQuery, BorrowedBook[]>(
+      new BorrowingHistoryQuery(user.getId()),
     );
     return borrowedBooks.map((book) => this.borrowedBookDtoFactory.createFromEntity(book));
   }

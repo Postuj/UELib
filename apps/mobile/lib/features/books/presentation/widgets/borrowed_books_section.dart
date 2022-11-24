@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile/features/books/presentation/widgets/returned_book_list_tile.dart';
 
-import '../blocs/borrowing_history/borrowing_history_bloc.dart';
+import '../blocs/currently_borrowed/currently_borrowed_bloc.dart';
+import 'currently_borrowed_book_list_tile.dart';
 
-class BorrowHistorySection extends StatelessWidget {
-  const BorrowHistorySection({Key? key}) : super(key: key);
+class BorrowedBooksSection extends StatelessWidget {
+  const BorrowedBooksSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +16,11 @@ class BorrowHistorySection extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: Text(
-              'Borrowing history',
+              'Currently borrowed',
               style: Theme.of(context).textTheme.headline5,
             ),
           ),
-          BlocBuilder<BorrowingHistoryBloc, BorrowingHistoryState>(
+          BlocBuilder<CurrentlyBorrowedBloc, CurrentlyBorrowedState>(
             builder: _buildContent,
           ),
         ],
@@ -28,14 +28,14 @@ class BorrowHistorySection extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(BuildContext context, BorrowingHistoryState state) {
-    if (state is BorrowingHistoryLoadedState) {
+  Widget _buildContent(BuildContext context, CurrentlyBorrowedState state) {
+    if (state is CurrentlyBorrowedLoadedState) {
       if (state.books.isNotEmpty) {
         return Flex(
           mainAxisSize: MainAxisSize.min,
           direction: Axis.vertical,
           children: state.books
-              .map((book) => ReturnedBookListTile(book: book))
+              .map((book) => CurrentlyBorrowedBookListTile(book: book))
               .toList(),
         );
       }
@@ -48,19 +48,19 @@ class BorrowHistorySection extends StatelessWidget {
         height: 70,
         child: Center(
           child: Text(
-            "There aren't any books in Your history",
+            "Currently You don't have any borrowed books",
             style: Theme.of(context).textTheme.bodyText2,
           ),
         ),
       );
-    } else if (state is BorrowingHistoryLoadingState) {
+    } else if (state is CurrentlyBorrowedLoadingState) {
       return const SizedBox(
         height: 70,
         child: Center(
           child: CircularProgressIndicator(),
         ),
       );
-    } else if (state is BorrowingHistoryErrorState) {
+    } else if (state is CurrentlyBorrowedErrorState) {
       return const SizedBox(
         height: 70,
         child: Center(

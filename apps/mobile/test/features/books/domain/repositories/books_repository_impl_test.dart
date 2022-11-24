@@ -6,11 +6,13 @@ import 'package:mobile/core/error/failure.dart';
 import 'package:mobile/di/injection.dart';
 import 'package:mobile/features/books/data/factories/book_entity_factory.dart';
 import 'package:mobile/features/books/data/factories/book_with_availability_entity_factory.dart';
+import 'package:mobile/features/books/data/factories/borrowed_book_entity_factory.dart';
 import 'package:mobile/features/books/data/repositories/books_repository_impl.dart';
 import 'package:mobile/features/books/data/sources/books_api.dart';
 import 'package:mobile/features/books/domain/entities/author.dart';
 import 'package:mobile/features/books/domain/entities/book.dart';
 import 'package:mobile/features/books/domain/entities/book_with_availability.dart';
+import 'package:mobile/features/books/domain/entities/borrowed_book.dart';
 import 'package:mobile/features/books/domain/entities/genre.dart';
 
 import '../../../../core/data/sources/interceptors/mock_api_failure_interceptor.dart';
@@ -36,6 +38,7 @@ void main() {
     repository = BooksRepositoryImpl(
       booksApi: api,
       bookEntityFactory: getIt<BookEntityFactory>(),
+      borrowedBookEntityFactory: getIt<BorrowedBookEntityFactory>(),
       bookEntityWithAvailabilityFactory:
           getIt<BookWithAvailabilityEntityFactory>(),
     );
@@ -52,6 +55,18 @@ void main() {
   final tBooks = [
     tBook,
   ];
+  final tBorrowedBook = BorrowedBook(
+    id: '123',
+    title: 'Test',
+    description: null,
+    publishedAt: DateTime(2022, 10, 23),
+    author: Author(id: '123', name: 'Test', surname: 'Author'),
+    genre: Genre(id: '123', name: 'Test'),
+    borrowedAt: DateTime(2022, 11, 21),
+    returnedAt: DateTime(2022, 11, 24),
+    plannedDateOfReturn: DateTime(2022, 12, 5),
+  );
+  final tBorrowedBooks = [tBorrowedBook];
 
   void setUpApiErrorResponse(int statusCode) {
     dio.interceptors.add(MockApiFailureInterceptor(statusCode: statusCode));
@@ -102,6 +117,30 @@ void main() {
       final result = await repository.getBooks(titleOrAuthor: tTitleOrAuthor);
       // assert
       expect(result, isRightThat(equals(tBooks)));
+    });
+  });
+
+  group('getCurrentlyBorrowedBooks', () {
+    test('should return currently BorrowedBooks from API', () async {
+      // arrange
+      dio.interceptors.add(
+          MockSuccessApiResponseInterceptor(jsonFile: 'borrowed_books.json'));
+      // act
+      final result = await repository.getCurrentlyBorrowedBooks();
+      // assert
+      expect(result, isRightThat(equals(tBorrowedBooks)));
+    });
+  });
+
+  group('getBorrowingHistory', () {
+    test('should return BorrowedBooks history', () async {
+      // arrange
+      dio.interceptors.add(
+          MockSuccessApiResponseInterceptor(jsonFile: 'borrowed_books.json'));
+      // act
+      final result = await repository.getBorrowingHistory();
+      // assert
+      expect(result, isRightThat(equals(tBorrowedBooks)));
     });
   });
 

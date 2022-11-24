@@ -18,6 +18,17 @@ class BorrowBookForm extends StatelessWidget {
     router.pop();
   }
 
+  void _onBorrowClick(BuildContext context, String bookId) {
+    context.read<BorrowBookBloc>().add(
+          BorrowBookBorrowEvent(
+            bookId: bookId,
+            plannedDateOfReturn: DateTime.now().add(
+              const Duration(days: 14),
+            ),
+          ),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     final book = state.book;
@@ -83,14 +94,7 @@ class BorrowBookForm extends StatelessWidget {
               children: [
                 if (!isBorrowed && book.isAvailable)
                   ElevatedButton(
-                    onPressed: () => context
-                        .read<BorrowBookBloc>()
-                        .add(BorrowBookBorrowEvent(
-                          bookId: book.id,
-                          plannedDateOfReturn: DateTime.now().add(
-                            const Duration(days: 14),
-                          ),
-                        )),
+                    onPressed: () => _onBorrowClick(context, book.id),
                     child: Text(
                       'Borrow',
                       style: Theme.of(context).textTheme.button,

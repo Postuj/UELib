@@ -71,7 +71,7 @@ void main() {
   group('Log out', () {
     test('should emit [AuthAuthenticatedState] on usecase success', () {
       // arrange
-      when(logOut(NoParams())).thenAnswer((_) async => const Right(null));
+      when(logOut(const NoParams())).thenAnswer((_) async => const Right(null));
       // assert later
       final expected = [AuthNotAuthenticatedState()];
       expectLater(bloc.stream, emitsInOrder(expected));
@@ -81,7 +81,7 @@ void main() {
 
     test('should emit [AuthErrorState] on usecase failure', () {
       // arrange
-      when(logOut(NoParams()))
+      when(logOut(const NoParams()))
           .thenAnswer((_) async => Left(ServerUnathorizedFailure()));
       // assert later
       final expected = [AuthErrorState()];

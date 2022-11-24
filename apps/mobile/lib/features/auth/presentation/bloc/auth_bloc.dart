@@ -43,7 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _handleLogOutEvent(
       LogOutEvent event, Emitter<AuthState> emit) async {
-    final result = await _logOut(NoParams());
+    final result = await _logOut(const NoParams());
     result.fold(
       (l) => emit(AuthErrorState()),
       (r) {

@@ -20,7 +20,6 @@ import { BookDtoFactory } from './dto/book/book-dto.factory';
 import { BorrowedBookDtoFactory } from './dto/borrow-book/borrowed-book-dto.factory';
 import { BookWithAvailabilityFactory } from './entities/book-with-availability/book-with-availability.factory';
 import { BorrowedBookFactory } from './entities/borrowed-book/borrowed-book.factory';
-import { BookBorrowedHandler } from './events/book-borrowed/book-borrowed.handler';
 import { BookWithAvailabilityQueryHandler } from './queries/book-with-availability/book-with-availability.handler';
 import { BooksQueryHandler } from './queries/books/books.handler';
 import { BorrowingHistoryHandler } from './queries/borrow-history/borrowing-history.handler';
@@ -33,7 +32,6 @@ const queryHandlers = [
   BorrowingHistoryHandler,
 ];
 const commandHandlers = [BorrowBookHandler];
-const eventHandlers = [BookBorrowedHandler];
 
 @Module({
   imports: [
@@ -55,7 +53,6 @@ const eventHandlers = [BookBorrowedHandler];
     BookWithAvailabilityDtoFactory,
     ...queryHandlers,
     ...commandHandlers,
-    ...eventHandlers,
   ],
   controllers: [BooksController, BookController],
 })

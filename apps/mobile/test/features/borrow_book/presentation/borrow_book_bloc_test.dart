@@ -6,6 +6,7 @@ import 'package:mobile/features/books/domain/entities/author.dart';
 import 'package:mobile/features/books/domain/entities/book_with_availability.dart';
 import 'package:mobile/features/books/domain/entities/genre.dart';
 import 'package:mobile/features/books/domain/usecases/get_book_with_availability_usecase.dart';
+import 'package:mobile/features/books/presentation/blocs/currently_borrowed/currently_borrowed_bloc.dart';
 import 'package:mobile/features/borrow_book/presentation/bloc/borrow_book_bloc.dart';
 import 'package:mobile/features/borrow_book/usecases/borrow_book_usecase.dart';
 import 'package:mockito/mockito.dart';
@@ -15,6 +16,7 @@ import '../../../core/test_env_setup.dart';
 
 void main() {
   late BorrowBookBloc bloc;
+  late CurrentlyBorrowedBloc currentlyBorrowedBloc;
   late BorrowBookUsecase borrowBookUsecase;
   late GetBookWithAvailabilityUsecase getBookWithAvailabilityUsecase;
   const tBookId = '123';
@@ -37,9 +39,11 @@ void main() {
   setUp(() {
     borrowBookUsecase = getIt<BorrowBookUsecase>();
     getBookWithAvailabilityUsecase = getIt<GetBookWithAvailabilityUsecase>();
+    currentlyBorrowedBloc = getIt<CurrentlyBorrowedBloc>();
     bloc = BorrowBookBloc(
       borrowBookUsecase: borrowBookUsecase,
       getBookWithAvailabilityUsecase: getBookWithAvailabilityUsecase,
+      currentlyBorrowedBloc: currentlyBorrowedBloc,
     );
   });
 

@@ -6,6 +6,7 @@ import 'package:retrofit/http.dart';
 
 import '../../../../core/data/sources/env.dart';
 import '../models/book_with_availability_dto.dart';
+import '../models/borrowed_book_dto.dart';
 
 part 'books_api.g.dart';
 
@@ -28,6 +29,12 @@ abstract class BooksApi {
   Future<List<BookDto>> getBooksByTitleOrAuthor(
     @Query('titleOrAuthor') String titleOrAuthor,
   );
+
+  @GET('/currently-borrowed')
+  Future<List<BorrowedBookDto>> getCurrentlyBorrowedBooks();
+
+  @GET('/borrowing-history')
+  Future<List<BorrowedBookDto>> getBorrowingHistory();
 
   @GET('/{id}/with-availability')
   Future<BookWithAvailabilityDto> getBookWithAvailabilityById(

@@ -2,27 +2,32 @@ import 'package:injectable/injectable.dart';
 import 'package:mobile/core/data/sources/dio/error/not_found_error.dart';
 import 'package:mobile/features/books/data/factories/book_entity_factory.dart';
 import 'package:mobile/features/books/data/factories/book_with_availability_entity_factory.dart';
+import 'package:mobile/features/books/data/factories/borrowed_book_entity_factory.dart';
 import 'package:mobile/features/books/data/sources/books_api.dart';
 import 'package:mobile/features/books/data/sources/requests/borrow_book_request.dart';
 import 'package:mobile/features/books/domain/entities/book.dart';
 import 'package:mobile/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mobile/features/books/domain/entities/book_with_availability.dart';
+import 'package:mobile/features/books/domain/entities/borrowed_book.dart';
 import 'package:mobile/features/books/domain/repositories/books_repository.dart';
 
 @Injectable(as: BooksRepository, env: ['dev', 'prod'])
 class BooksRepositoryImpl implements BooksRepository {
   final BooksApi _booksApi;
   final BookEntityFactory _bookEntityFactory;
+  final BorrowedBookEntityFactory _borrowedBookEntityFactory;
   final BookWithAvailabilityEntityFactory _bookEntityWithAvailabilityFactory;
 
   BooksRepositoryImpl({
     required BooksApi booksApi,
     required BookEntityFactory bookEntityFactory,
+    required BorrowedBookEntityFactory borrowedBookEntityFactory,
     required BookWithAvailabilityEntityFactory
         bookEntityWithAvailabilityFactory,
   })  : _booksApi = booksApi,
         _bookEntityFactory = bookEntityFactory,
+        _borrowedBookEntityFactory = borrowedBookEntityFactory,
         _bookEntityWithAvailabilityFactory = bookEntityWithAvailabilityFactory;
 
   @override
@@ -77,6 +82,31 @@ class BooksRepositoryImpl implements BooksRepository {
     } on NotFoundError catch (_) {
       return Left(ServerResourceNotFoundFailure());
     } catch (_) {
+      return Left(ServerUnexpectedFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<BorrowedBook>>>
+      getCurrentlyBorrowedBooks() async {
+    try {
+      final result = await _booksApi.getCurrentlyBorrowedBooks();
+      return Right(result
+          .map((dto) => _borrowedBookEntityFactory.fromDto(dto))
+          .toList());
+    } catch (err) {
+      return Left(ServerUnexpectedFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<BorrowedBook>>> getBorrowingHistory() async {
+    try {
+      final result = await _booksApi.getBorrowingHistory();
+      return Right(result
+          .map((dto) => _borrowedBookEntityFactory.fromDto(dto))
+          .toList());
+    } catch (err) {
       return Left(ServerUnexpectedFailure());
     }
   }

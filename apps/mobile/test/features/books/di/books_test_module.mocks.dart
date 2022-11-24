@@ -3,21 +3,31 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
-import 'package:dartz/dartz.dart' as _i2;
-import 'package:mobile/core/error/failure.dart' as _i5;
-import 'package:mobile/features/books/domain/entities/book.dart' as _i6;
+import 'package:bloc/bloc.dart' as _i6;
+import 'package:dartz/dartz.dart' as _i3;
+import 'package:mobile/core/domain/usecases/usecase.dart' as _i15;
+import 'package:mobile/core/error/failure.dart' as _i7;
+import 'package:mobile/features/books/domain/entities/book.dart' as _i8;
 import 'package:mobile/features/books/domain/entities/book_with_availability.dart'
-    as _i7;
-import 'package:mobile/features/books/domain/repositories/books_repository.dart'
-    as _i3;
-import 'package:mobile/features/books/domain/usecases/get_book_by_id_usecase.dart'
-    as _i9;
-import 'package:mobile/features/books/domain/usecases/get_book_with_availability_usecase.dart'
     as _i10;
+import 'package:mobile/features/books/domain/entities/borrowed_book.dart'
+    as _i9;
+import 'package:mobile/features/books/domain/repositories/books_repository.dart'
+    as _i4;
+import 'package:mobile/features/books/domain/usecases/get_book_by_id_usecase.dart'
+    as _i12;
+import 'package:mobile/features/books/domain/usecases/get_book_with_availability_usecase.dart'
+    as _i13;
 import 'package:mobile/features/books/domain/usecases/get_books_by_title_or_author_usecase.dart'
-    as _i8;
+    as _i11;
+import 'package:mobile/features/books/domain/usecases/get_borrowing_history_usecase.dart'
+    as _i16;
+import 'package:mobile/features/books/domain/usecases/get_currently_borrowed_books_usecase.dart'
+    as _i14;
+import 'package:mobile/features/books/presentation/blocs/currently_borrowed/currently_borrowed_bloc.dart'
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -31,8 +41,9 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
-  _FakeEither_0(
+class _FakeCurrentlyBorrowedState_0 extends _i1.SmartFake
+    implements _i2.CurrentlyBorrowedState {
+  _FakeCurrentlyBorrowedState_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -41,30 +52,169 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
         );
 }
 
-class _FakeBooksRepository_1 extends _i1.SmartFake
-    implements _i3.BooksRepository {
-  _FakeBooksRepository_1(
+class _FakeEither_1<L, R> extends _i1.SmartFake implements _i3.Either<L, R> {
+  _FakeEither_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
           parent,
           parentInvocation,
         );
+}
+
+class _FakeBooksRepository_2 extends _i1.SmartFake
+    implements _i4.BooksRepository {
+  _FakeBooksRepository_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+/// A class which mocks [CurrentlyBorrowedBloc].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockCurrentlyBorrowedBloc extends _i1.Mock
+    implements _i2.CurrentlyBorrowedBloc {
+  @override
+  _i2.CurrentlyBorrowedState get state => (super.noSuchMethod(
+        Invocation.getter(#state),
+        returnValue: _FakeCurrentlyBorrowedState_0(
+          this,
+          Invocation.getter(#state),
+        ),
+        returnValueForMissingStub: _FakeCurrentlyBorrowedState_0(
+          this,
+          Invocation.getter(#state),
+        ),
+      ) as _i2.CurrentlyBorrowedState);
+  @override
+  _i5.Stream<_i2.CurrentlyBorrowedState> get stream => (super.noSuchMethod(
+        Invocation.getter(#stream),
+        returnValue: _i5.Stream<_i2.CurrentlyBorrowedState>.empty(),
+        returnValueForMissingStub:
+            _i5.Stream<_i2.CurrentlyBorrowedState>.empty(),
+      ) as _i5.Stream<_i2.CurrentlyBorrowedState>);
+  @override
+  bool get isClosed => (super.noSuchMethod(
+        Invocation.getter(#isClosed),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+  @override
+  void add(_i2.CurrentlyBorrowedEvent? event) => super.noSuchMethod(
+        Invocation.method(
+          #add,
+          [event],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void onEvent(_i2.CurrentlyBorrowedEvent? event) => super.noSuchMethod(
+        Invocation.method(
+          #onEvent,
+          [event],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void emit(_i2.CurrentlyBorrowedState? state) => super.noSuchMethod(
+        Invocation.method(
+          #emit,
+          [state],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void on<E extends _i2.CurrentlyBorrowedEvent>(
+    _i6.EventHandler<E, _i2.CurrentlyBorrowedState>? handler, {
+    _i6.EventTransformer<E>? transformer,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #on,
+          [handler],
+          {#transformer: transformer},
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void onTransition(
+          _i6.Transition<_i2.CurrentlyBorrowedEvent,
+                  _i2.CurrentlyBorrowedState>?
+              transition) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onTransition,
+          [transition],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i5.Future<void> close() => (super.noSuchMethod(
+        Invocation.method(
+          #close,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  void onChange(_i6.Change<_i2.CurrentlyBorrowedState>? change) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onChange,
+          [change],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void addError(
+    Object? error, [
+    StackTrace? stackTrace,
+  ]) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #addError,
+          [
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void onError(
+    Object? error,
+    StackTrace? stackTrace,
+  ) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #onError,
+          [
+            error,
+            stackTrace,
+          ],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
 
 /// A class which mocks [BooksRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockBooksRepository extends _i1.Mock implements _i3.BooksRepository {
+class MockBooksRepository extends _i1.Mock implements _i4.BooksRepository {
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Book>> getBookById(String? id) =>
+  _i5.Future<_i3.Either<_i7.Failure, _i8.Book>> getBookById(String? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #getBookById,
           [id],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Book>>.value(
-            _FakeEither_0<_i5.Failure, _i6.Book>(
+        returnValue: _i5.Future<_i3.Either<_i7.Failure, _i8.Book>>.value(
+            _FakeEither_1<_i7.Failure, _i8.Book>(
           this,
           Invocation.method(
             #getBookById,
@@ -72,17 +222,17 @@ class MockBooksRepository extends _i1.Mock implements _i3.BooksRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Book>>.value(
-                _FakeEither_0<_i5.Failure, _i6.Book>(
+            _i5.Future<_i3.Either<_i7.Failure, _i8.Book>>.value(
+                _FakeEither_1<_i7.Failure, _i8.Book>(
           this,
           Invocation.method(
             #getBookById,
             [id],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Book>>);
+      ) as _i5.Future<_i3.Either<_i7.Failure, _i8.Book>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Book>>> getBooks(
+  _i5.Future<_i3.Either<_i7.Failure, List<_i8.Book>>> getBooks(
           {String? titleOrAuthor}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -90,8 +240,8 @@ class MockBooksRepository extends _i1.Mock implements _i3.BooksRepository {
           [],
           {#titleOrAuthor: titleOrAuthor},
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i6.Book>>>.value(
-            _FakeEither_0<_i5.Failure, List<_i6.Book>>(
+        returnValue: _i5.Future<_i3.Either<_i7.Failure, List<_i8.Book>>>.value(
+            _FakeEither_1<_i7.Failure, List<_i8.Book>>(
           this,
           Invocation.method(
             #getBooks,
@@ -100,8 +250,8 @@ class MockBooksRepository extends _i1.Mock implements _i3.BooksRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Book>>>.value(
-                _FakeEither_0<_i5.Failure, List<_i6.Book>>(
+            _i5.Future<_i3.Either<_i7.Failure, List<_i8.Book>>>.value(
+                _FakeEither_1<_i7.Failure, List<_i8.Book>>(
           this,
           Invocation.method(
             #getBooks,
@@ -109,37 +259,91 @@ class MockBooksRepository extends _i1.Mock implements _i3.BooksRepository {
             {#titleOrAuthor: titleOrAuthor},
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Book>>>);
+      ) as _i5.Future<_i3.Either<_i7.Failure, List<_i8.Book>>>);
   @override
-  _i4.Future<
-      _i2.Either<_i5.Failure,
-          _i7.BookWithAvailability>> getBookWithAvailability(String? id) =>
+  _i5.Future<
+      _i3.Either<_i7.Failure,
+          List<_i9.BorrowedBook>>> getCurrentlyBorrowedBooks() =>
       (super.noSuchMethod(
         Invocation.method(
-          #getBookWithAvailability,
-          [id],
+          #getCurrentlyBorrowedBooks,
+          [],
         ),
         returnValue:
-            _i4.Future<_i2.Either<_i5.Failure, _i7.BookWithAvailability>>.value(
-                _FakeEither_0<_i5.Failure, _i7.BookWithAvailability>(
+            _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>.value(
+                _FakeEither_1<_i7.Failure, List<_i9.BorrowedBook>>(
           this,
           Invocation.method(
-            #getBookWithAvailability,
-            [id],
+            #getCurrentlyBorrowedBooks,
+            [],
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i7.BookWithAvailability>>.value(
-                _FakeEither_0<_i5.Failure, _i7.BookWithAvailability>(
+            _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>.value(
+                _FakeEither_1<_i7.Failure, List<_i9.BorrowedBook>>(
           this,
           Invocation.method(
-            #getBookWithAvailability,
-            [id],
+            #getCurrentlyBorrowedBooks,
+            [],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i7.BookWithAvailability>>);
+      ) as _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, void>> borrowBook({
+  _i5.Future<
+      _i3
+          .Either<_i7.Failure, List<_i9.BorrowedBook>>> getBorrowingHistory() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getBorrowingHistory,
+          [],
+        ),
+        returnValue:
+            _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>.value(
+                _FakeEither_1<_i7.Failure, List<_i9.BorrowedBook>>(
+          this,
+          Invocation.method(
+            #getBorrowingHistory,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>.value(
+                _FakeEither_1<_i7.Failure, List<_i9.BorrowedBook>>(
+          this,
+          Invocation.method(
+            #getBorrowingHistory,
+            [],
+          ),
+        )),
+      ) as _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>);
+  @override
+  _i5.Future<_i3.Either<_i7.Failure, _i10.BookWithAvailability>>
+      getBookWithAvailability(String? id) => (super.noSuchMethod(
+            Invocation.method(
+              #getBookWithAvailability,
+              [id],
+            ),
+            returnValue: _i5.Future<
+                    _i3.Either<_i7.Failure, _i10.BookWithAvailability>>.value(
+                _FakeEither_1<_i7.Failure, _i10.BookWithAvailability>(
+              this,
+              Invocation.method(
+                #getBookWithAvailability,
+                [id],
+              ),
+            )),
+            returnValueForMissingStub: _i5.Future<
+                    _i3.Either<_i7.Failure, _i10.BookWithAvailability>>.value(
+                _FakeEither_1<_i7.Failure, _i10.BookWithAvailability>(
+              this,
+              Invocation.method(
+                #getBookWithAvailability,
+                [id],
+              ),
+            )),
+          ) as _i5.Future<_i3.Either<_i7.Failure, _i10.BookWithAvailability>>);
+  @override
+  _i5.Future<_i3.Either<_i7.Failure, void>> borrowBook({
     required String? id,
     required DateTime? plannedDateOfReturn,
   }) =>
@@ -152,8 +356,8 @@ class MockBooksRepository extends _i1.Mock implements _i3.BooksRepository {
             #plannedDateOfReturn: plannedDateOfReturn,
           },
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, void>>.value(
-            _FakeEither_0<_i5.Failure, void>(
+        returnValue: _i5.Future<_i3.Either<_i7.Failure, void>>.value(
+            _FakeEither_1<_i7.Failure, void>(
           this,
           Invocation.method(
             #borrowBook,
@@ -165,8 +369,8 @@ class MockBooksRepository extends _i1.Mock implements _i3.BooksRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, void>>.value(
-                _FakeEither_0<_i5.Failure, void>(
+            _i5.Future<_i3.Either<_i7.Failure, void>>.value(
+                _FakeEither_1<_i7.Failure, void>(
           this,
           Invocation.method(
             #borrowBook,
@@ -177,36 +381,36 @@ class MockBooksRepository extends _i1.Mock implements _i3.BooksRepository {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, void>>);
+      ) as _i5.Future<_i3.Either<_i7.Failure, void>>);
 }
 
 /// A class which mocks [GetBooksByTitleOrAuthorUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetBooksByTitleOrAuthorUsecase extends _i1.Mock
-    implements _i8.GetBooksByTitleOrAuthorUsecase {
+    implements _i11.GetBooksByTitleOrAuthorUsecase {
   @override
-  _i3.BooksRepository get repository => (super.noSuchMethod(
+  _i4.BooksRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
-        returnValue: _FakeBooksRepository_1(
+        returnValue: _FakeBooksRepository_2(
           this,
           Invocation.getter(#repository),
         ),
-        returnValueForMissingStub: _FakeBooksRepository_1(
+        returnValueForMissingStub: _FakeBooksRepository_2(
           this,
           Invocation.getter(#repository),
         ),
-      ) as _i3.BooksRepository);
+      ) as _i4.BooksRepository);
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Book>>> call(
-          _i8.GetBooksByTitleOrAuthorParams? params) =>
+  _i5.Future<_i3.Either<_i7.Failure, List<_i8.Book>>> call(
+          _i11.GetBooksByTitleOrAuthorParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [params],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i6.Book>>>.value(
-            _FakeEither_0<_i5.Failure, List<_i6.Book>>(
+        returnValue: _i5.Future<_i3.Either<_i7.Failure, List<_i8.Book>>>.value(
+            _FakeEither_1<_i7.Failure, List<_i8.Book>>(
           this,
           Invocation.method(
             #call,
@@ -214,32 +418,32 @@ class MockGetBooksByTitleOrAuthorUsecase extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, List<_i6.Book>>>.value(
-                _FakeEither_0<_i5.Failure, List<_i6.Book>>(
+            _i5.Future<_i3.Either<_i7.Failure, List<_i8.Book>>>.value(
+                _FakeEither_1<_i7.Failure, List<_i8.Book>>(
           this,
           Invocation.method(
             #call,
             [params],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Book>>>);
+      ) as _i5.Future<_i3.Either<_i7.Failure, List<_i8.Book>>>);
 }
 
 /// A class which mocks [GetBookByIdUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetBookByIdUsecase extends _i1.Mock
-    implements _i9.GetBookByIdUsecase {
+    implements _i12.GetBookByIdUsecase {
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Book>> call(
-          _i9.GetBookByIdParams? params) =>
+  _i5.Future<_i3.Either<_i7.Failure, _i8.Book>> call(
+          _i12.GetBookByIdParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [params],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Book>>.value(
-            _FakeEither_0<_i5.Failure, _i6.Book>(
+        returnValue: _i5.Future<_i3.Either<_i7.Failure, _i8.Book>>.value(
+            _FakeEither_1<_i7.Failure, _i8.Book>(
           this,
           Invocation.method(
             #call,
@@ -247,33 +451,67 @@ class MockGetBookByIdUsecase extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Book>>.value(
-                _FakeEither_0<_i5.Failure, _i6.Book>(
+            _i5.Future<_i3.Either<_i7.Failure, _i8.Book>>.value(
+                _FakeEither_1<_i7.Failure, _i8.Book>(
           this,
           Invocation.method(
             #call,
             [params],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Book>>);
+      ) as _i5.Future<_i3.Either<_i7.Failure, _i8.Book>>);
 }
 
 /// A class which mocks [GetBookWithAvailabilityUsecase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetBookWithAvailabilityUsecase extends _i1.Mock
-    implements _i10.GetBookWithAvailabilityUsecase {
+    implements _i13.GetBookWithAvailabilityUsecase {
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i7.BookWithAvailability>> call(
-          _i10.GetBookWithAvailabilityParams? params) =>
+  _i5.Future<_i3.Either<_i7.Failure, _i10.BookWithAvailability>> call(
+          _i13.GetBookWithAvailabilityParams? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [params],
+        ),
+        returnValue: _i5.Future<
+                _i3.Either<_i7.Failure, _i10.BookWithAvailability>>.value(
+            _FakeEither_1<_i7.Failure, _i10.BookWithAvailability>(
+          this,
+          Invocation.method(
+            #call,
+            [params],
+          ),
+        )),
+        returnValueForMissingStub: _i5.Future<
+                _i3.Either<_i7.Failure, _i10.BookWithAvailability>>.value(
+            _FakeEither_1<_i7.Failure, _i10.BookWithAvailability>(
+          this,
+          Invocation.method(
+            #call,
+            [params],
+          ),
+        )),
+      ) as _i5.Future<_i3.Either<_i7.Failure, _i10.BookWithAvailability>>);
+}
+
+/// A class which mocks [GetCurrentlyBorrowedBooksUsecase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetCurrentlyBorrowedBooksUsecase extends _i1.Mock
+    implements _i14.GetCurrentlyBorrowedBooksUsecase {
+  @override
+  _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>> call(
+          _i15.NoParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [params],
         ),
         returnValue:
-            _i4.Future<_i2.Either<_i5.Failure, _i7.BookWithAvailability>>.value(
-                _FakeEither_0<_i5.Failure, _i7.BookWithAvailability>(
+            _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>.value(
+                _FakeEither_1<_i7.Failure, List<_i9.BorrowedBook>>(
           this,
           Invocation.method(
             #call,
@@ -281,13 +519,47 @@ class MockGetBookWithAvailabilityUsecase extends _i1.Mock
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i7.BookWithAvailability>>.value(
-                _FakeEither_0<_i5.Failure, _i7.BookWithAvailability>(
+            _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>.value(
+                _FakeEither_1<_i7.Failure, List<_i9.BorrowedBook>>(
           this,
           Invocation.method(
             #call,
             [params],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i7.BookWithAvailability>>);
+      ) as _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>);
+}
+
+/// A class which mocks [GetBorrowingHistoryUsecase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGetBorrowingHistoryUsecase extends _i1.Mock
+    implements _i16.GetBorrowingHistoryUsecase {
+  @override
+  _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>> call(
+          _i15.NoParams? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #call,
+          [params],
+        ),
+        returnValue:
+            _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>.value(
+                _FakeEither_1<_i7.Failure, List<_i9.BorrowedBook>>(
+          this,
+          Invocation.method(
+            #call,
+            [params],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>.value(
+                _FakeEither_1<_i7.Failure, List<_i9.BorrowedBook>>(
+          this,
+          Invocation.method(
+            #call,
+            [params],
+          ),
+        )),
+      ) as _i5.Future<_i3.Either<_i7.Failure, List<_i9.BorrowedBook>>>);
 }

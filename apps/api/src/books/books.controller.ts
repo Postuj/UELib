@@ -38,7 +38,7 @@ export class BooksController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Get('history')
+  @Get('borrowing-history')
   async getUserBorrowigHistory(@GetUser() user: User): Promise<BorrowedBookDto[]> {
     const borrowedBooks = await this.queryBus.execute<BorrowingHistoryQuery, BorrowedBook[]>(
       new BorrowingHistoryQuery(user.getId()),

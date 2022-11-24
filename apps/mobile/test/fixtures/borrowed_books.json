@@ -1,0 +1,20 @@
+[
+  {
+    "id": "123",
+    "title": "Test",
+    "description": null,
+    "publishedAt": "2022-10-23T00:00:00.000",
+    "author": {
+      "id": "123",
+      "name": "Test",
+      "surname": "Author"
+    },
+    "genre": {
+      "id": "123",
+      "name": "Test"
+    },
+    "borrowedAt": "2022-11-21T00:00:00.000",
+    "returnedAt": "2022-11-24T00:00:00.000",
+    "plannedDateOfReturn": "2022-12-05T00:00:00.000"
+  }
+]

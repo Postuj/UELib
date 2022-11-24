@@ -27,7 +27,7 @@ void main() {
     // arrange
     when(authService.logOut()).thenAnswer((_) async => const Right(null));
     // act
-    final result = await usecase(NoParams());
+    final result = await usecase(const NoParams());
     // assert
     expect(result, const Right(null));
     verify(authService.logOut());

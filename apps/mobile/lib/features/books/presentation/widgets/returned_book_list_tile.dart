@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mobile/features/books/domain/entities/borrowed_book.dart';
+import '../../../../core/presentation/utils/date_time_format_extension.dart';
 
-class BookListTile extends StatelessWidget {
-  const BookListTile({Key? key, required this.title}) : super(key: key);
+class ReturnedBookListTile extends StatelessWidget {
+  const ReturnedBookListTile({Key? key, required this.book}) : super(key: key);
 
-  final String title;
+  final BorrowedBook book;
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +14,11 @@ class BookListTile extends StatelessWidget {
       padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
       child: ListTile(
         title: Text(
-          title,
+          book.title,
           style: Theme.of(context).textTheme.headline6,
         ),
         subtitle: Text(
-          'Returened at 14/10/2022',
+          'Returned at ${book.returnedAt!.toFormattedDateString()}',
           style: GoogleFonts.roboto(
             color: const Color(0xff1E1E1E),
             fontWeight: FontWeight.w400,

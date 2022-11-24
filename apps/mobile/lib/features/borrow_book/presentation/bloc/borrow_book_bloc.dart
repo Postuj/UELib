@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobile/features/books/domain/entities/book_with_availability.dart';
 import 'package:mobile/features/books/domain/usecases/get_book_with_availability_usecase.dart';
+import 'package:mobile/features/books/presentation/blocs/currently_borrowed/currently_borrowed_bloc.dart';
 import 'package:mobile/features/borrow_book/usecases/borrow_book_usecase.dart';
 
 part 'borrow_book_event.dart';
@@ -10,14 +11,17 @@ part 'borrow_book_state.dart';
 
 @injectable
 class BorrowBookBloc extends Bloc<BorrowBookEvent, BorrowBookState> {
+  final CurrentlyBorrowedBloc _currentlyBorrowedBloc;
   final GetBookWithAvailabilityUsecase _getBookWithAvailabilityUsecase;
   final BorrowBookUsecase _borrowBookUsecase;
 
   BorrowBookBloc({
     required GetBookWithAvailabilityUsecase getBookWithAvailabilityUsecase,
     required BorrowBookUsecase borrowBookUsecase,
+    required CurrentlyBorrowedBloc currentlyBorrowedBloc,
   })  : _getBookWithAvailabilityUsecase = getBookWithAvailabilityUsecase,
         _borrowBookUsecase = borrowBookUsecase,
+        _currentlyBorrowedBloc = currentlyBorrowedBloc,
         super(BorrowBookScanningState()) {
     on<BorrowBookScannedEvent>(_handleBookScannedEvent);
     on<BorrowBookBorrowEvent>(_handleBookBorrowEvent);
@@ -48,7 +52,10 @@ class BorrowBookBloc extends Bloc<BorrowBookEvent, BorrowBookState> {
 
     result.fold(
       (l) => emit(BorrowBookBorrowingErrorState(book: book)),
-      (r) => emit(BorrowBookBorrowedState(book: book)),
+      (r) {
+        emit(BorrowBookBorrowedState(book: book));
+        _currentlyBorrowedBloc.add(const GetCurrentlyBorrowedEvent());
+      },
     );
   }
 }

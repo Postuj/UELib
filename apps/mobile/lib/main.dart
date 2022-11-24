@@ -9,6 +9,8 @@ import 'core/data/sources/env.dart';
 import 'core/presentation/router/router.dart';
 import 'di/injection.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
+import 'features/books/presentation/blocs/borrowing_history/borrowing_history_bloc.dart';
+import 'features/books/presentation/blocs/currently_borrowed/currently_borrowed_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,8 +34,12 @@ class UELibApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final router = getIt<AppRouter>();
 
-    return BlocProvider(
-      create: (context) => getIt<AuthBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => getIt<AuthBloc>()),
+        BlocProvider(create: (_) => getIt<CurrentlyBorrowedBloc>()),
+        BlocProvider(create: (_) => getIt<BorrowingHistoryBloc>()),
+      ],
       child: MaterialApp.router(
         title: 'UELib',
         theme: themeData,

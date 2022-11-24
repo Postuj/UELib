@@ -3,6 +3,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { BookEntityRepository } from 'src/books/db/book/book-entity.repository';
 import { BorrowedBookEntityRepository } from 'src/books/db/borrowed-books/borrowed-book-entity.repository';
 import { Book } from 'src/books/entities/book/book.entity';
+import { BorrowedBookFactory } from 'src/books/entities/borrowed-book/borrowed-book.factory';
 import { BorrowBookCommand } from './borrow-book.command';
 
 @CommandHandler(BorrowBookCommand)
@@ -13,6 +14,7 @@ export class BorrowBookHandler implements ICommandHandler<BorrowBookCommand> {
     private publisher: EventPublisher,
     private readonly borrowedBookRepo: BorrowedBookEntityRepository,
     private readonly booksRepo: BookEntityRepository,
+    private readonly borrowedBookFactory: BorrowedBookFactory,
   ) {}
 
   async execute(command: BorrowBookCommand): Promise<void> {
@@ -23,9 +25,8 @@ export class BorrowBookHandler implements ICommandHandler<BorrowBookCommand> {
 
     const book = await this.getBook(bookId);
     await this.checkIfBookIsAvailable(bookId);
-
-    user.borrowBook(book, plannedDateOfReturn);
-    user.commit();
+    
+    await this.borrowedBookFactory.create(book, user, plannedDateOfReturn);
 
     this.logger.log(`User@${user.getEmail()} borrowed a book ${book.getTitle()}`);
   }

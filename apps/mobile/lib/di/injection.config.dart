@@ -10,38 +10,48 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i6;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import '../core/di/app_module.dart' as _i28;
-import '../core/presentation/router/router.dart' as _i23;
+import '../core/di/app_module.dart' as _i33;
+import '../core/presentation/router/router.dart' as _i18;
 import '../features/auth/data/factories/auth_credentials_entity_factory.dart'
     as _i3;
 import '../features/auth/data/services/auth_service_impl.dart' as _i10;
 import '../features/auth/data/sources/auth_api.dart' as _i8;
 import '../features/auth/data/sources/interceptors/auth_interceptor.dart'
-    as _i25;
-import '../features/auth/di/auth_module.dart' as _i29;
+    as _i20;
+import '../features/auth/di/auth_module.dart' as _i34;
 import '../features/auth/domain/services/auth_service.dart' as _i9;
-import '../features/auth/domain/usecases/log_in_usecase.dart' as _i20;
-import '../features/auth/domain/usecases/log_out_usecase.dart' as _i21;
-import '../features/auth/presentation/bloc/auth_bloc.dart' as _i24;
-import '../features/auth/presentation/router/route_auth_guard.dart' as _i22;
+import '../features/auth/domain/usecases/log_in_usecase.dart' as _i15;
+import '../features/auth/domain/usecases/log_out_usecase.dart' as _i16;
+import '../features/auth/presentation/bloc/auth_bloc.dart' as _i19;
+import '../features/auth/presentation/router/route_auth_guard.dart' as _i17;
 import '../features/books/data/factories/author_entity_factory.dart' as _i4;
 import '../features/books/data/factories/book_entity_factory.dart' as _i11;
 import '../features/books/data/factories/book_with_availability_entity_factory.dart'
     as _i12;
+import '../features/books/data/factories/borrowed_book_entity_factory.dart'
+    as _i14;
 import '../features/books/data/factories/genre_entity_factory.dart' as _i7;
-import '../features/books/data/repositories/books_repository_impl.dart' as _i15;
+import '../features/books/data/repositories/books_repository_impl.dart' as _i22;
 import '../features/books/data/sources/books_api.dart' as _i13;
-import '../features/books/domain/repositories/books_repository.dart' as _i14;
-import '../features/books/domain/usecases/get_book_by_id_usecase.dart' as _i17;
+import '../features/books/domain/repositories/books_repository.dart' as _i21;
+import '../features/books/domain/usecases/get_book_by_id_usecase.dart' as _i24;
 import '../features/books/domain/usecases/get_book_with_availability_usecase.dart'
-    as _i18;
+    as _i25;
 import '../features/books/domain/usecases/get_books_by_title_or_author_usecase.dart'
-    as _i19;
-import '../features/books_search/presentation/bloc/books_search_bloc.dart'
     as _i26;
-import '../features/borrow_book/presentation/bloc/borrow_book_bloc.dart'
+import '../features/books/domain/usecases/get_borrowing_history_usecase.dart'
     as _i27;
-import '../features/borrow_book/usecases/borrow_book_usecase.dart' as _i16;
+import '../features/books/domain/usecases/get_currently_borrowed_books_usecase.dart'
+    as _i28;
+import '../features/books/presentation/blocs/borrowing_history/borrowing_history_bloc.dart'
+    as _i30;
+import '../features/books/presentation/blocs/currently_borrowed/currently_borrowed_bloc.dart'
+    as _i31;
+import '../features/books_search/presentation/bloc/books_search_bloc.dart'
+    as _i29;
+import '../features/borrow_book/presentation/bloc/borrow_book_bloc.dart'
+    as _i32;
+import '../features/borrow_book/usecases/borrow_book_usecase.dart' as _i23;
 
 const String _dev = 'dev';
 const String _prod = 'prod';
@@ -100,10 +110,46 @@ _i1.GetIt $initGetIt(
             genreEntityFactory: get<_i7.GenreEntityFactory>(),
           ));
   gh.factory<_i13.BooksApi>(() => _i13.BooksApi.create(get<_i5.Dio>()));
-  gh.factory<_i14.BooksRepository>(
-    () => _i15.BooksRepositoryImpl(
+  gh.factory<_i14.BorrowedBookEntityFactory>(
+      () => _i14.BorrowedBookEntityFactory(
+            authorEntityFactory: get<_i4.AuthorEntityFactory>(),
+            genreEntityFactory: get<_i7.GenreEntityFactory>(),
+          ));
+  gh.factory<_i15.LogInUsecase>(
+    () => _i15.LogInUsecase(authService: get<_i9.AuthService>()),
+    registerFor: {
+      _dev,
+      _prod,
+    },
+  );
+  gh.factory<_i16.LogOutUsecase>(
+    () => _i16.LogOutUsecase(authService: get<_i9.AuthService>()),
+    registerFor: {
+      _dev,
+      _prod,
+    },
+  );
+  gh.factory<_i17.RouteAuthGuard>(
+      () => _i17.RouteAuthGuard(authService: get<_i9.AuthService>()));
+  gh.singleton<_i18.AppRouter>(
+    _i18.AppRouter(routeAuthGuard: get<_i17.RouteAuthGuard>()),
+    registerFor: {
+      _dev,
+      _prod,
+    },
+  );
+  gh.factory<_i19.AuthBloc>(() => _i19.AuthBloc(
+        logIn: get<_i15.LogInUsecase>(),
+        logOut: get<_i16.LogOutUsecase>(),
+        router: get<_i18.AppRouter>(),
+      ));
+  gh.factory<_i20.AuthInterceptor>(
+      () => _i20.AuthInterceptor(authService: get<_i9.AuthService>()));
+  gh.factory<_i21.BooksRepository>(
+    () => _i22.BooksRepositoryImpl(
       booksApi: get<_i13.BooksApi>(),
       bookEntityFactory: get<_i11.BookEntityFactory>(),
+      borrowedBookEntityFactory: get<_i14.BorrowedBookEntityFactory>(),
       bookEntityWithAvailabilityFactory:
           get<_i12.BookWithAvailabilityEntityFactory>(),
     ),
@@ -112,78 +158,76 @@ _i1.GetIt $initGetIt(
       _prod,
     },
   );
-  gh.factory<_i16.BorrowBookUsecase>(
-    () => _i16.BorrowBookUsecase(booksRepository: get<_i14.BooksRepository>()),
+  gh.factory<_i23.BorrowBookUsecase>(
+    () => _i23.BorrowBookUsecase(booksRepository: get<_i21.BooksRepository>()),
     registerFor: {
       _dev,
       _prod,
     },
   );
-  gh.factory<_i17.GetBookByIdUsecase>(
-    () => _i17.GetBookByIdUsecase(repository: get<_i14.BooksRepository>()),
+  gh.factory<_i24.GetBookByIdUsecase>(
+    () => _i24.GetBookByIdUsecase(repository: get<_i21.BooksRepository>()),
     registerFor: {
       _dev,
       _prod,
     },
   );
-  gh.factory<_i18.GetBookWithAvailabilityUsecase>(
-    () => _i18.GetBookWithAvailabilityUsecase(
-        repository: get<_i14.BooksRepository>()),
+  gh.factory<_i25.GetBookWithAvailabilityUsecase>(
+    () => _i25.GetBookWithAvailabilityUsecase(
+        repository: get<_i21.BooksRepository>()),
     registerFor: {
       _dev,
       _prod,
     },
   );
-  gh.factory<_i19.GetBooksByTitleOrAuthorUsecase>(
-    () => _i19.GetBooksByTitleOrAuthorUsecase(
-        repository: get<_i14.BooksRepository>()),
+  gh.factory<_i26.GetBooksByTitleOrAuthorUsecase>(
+    () => _i26.GetBooksByTitleOrAuthorUsecase(
+        repository: get<_i21.BooksRepository>()),
     registerFor: {
       _dev,
       _prod,
     },
   );
-  gh.factory<_i20.LogInUsecase>(
-    () => _i20.LogInUsecase(authService: get<_i9.AuthService>()),
+  gh.factory<_i27.GetBorrowingHistoryUsecase>(
+    () => _i27.GetBorrowingHistoryUsecase(
+        repository: get<_i21.BooksRepository>()),
     registerFor: {
       _dev,
       _prod,
     },
   );
-  gh.factory<_i21.LogOutUsecase>(
-    () => _i21.LogOutUsecase(authService: get<_i9.AuthService>()),
+  gh.factory<_i28.GetCurrentlyBorrowedBooksUsecase>(
+    () => _i28.GetCurrentlyBorrowedBooksUsecase(
+        repository: get<_i21.BooksRepository>()),
     registerFor: {
       _dev,
       _prod,
     },
   );
-  gh.factory<_i22.RouteAuthGuard>(
-      () => _i22.RouteAuthGuard(authService: get<_i9.AuthService>()));
-  gh.singleton<_i23.AppRouter>(
-    _i23.AppRouter(routeAuthGuard: get<_i22.RouteAuthGuard>()),
-    registerFor: {
-      _dev,
-      _prod,
-    },
-  );
-  gh.factory<_i24.AuthBloc>(() => _i24.AuthBloc(
-        logIn: get<_i20.LogInUsecase>(),
-        logOut: get<_i21.LogOutUsecase>(),
-        router: get<_i23.AppRouter>(),
+  gh.factory<_i29.BooksSearchBloc>(() => _i29.BooksSearchBloc(
+        getBookById: get<_i24.GetBookByIdUsecase>(),
+        getBooksByTitleOrAuthor: get<_i26.GetBooksByTitleOrAuthorUsecase>(),
       ));
-  gh.factory<_i25.AuthInterceptor>(
-      () => _i25.AuthInterceptor(authService: get<_i9.AuthService>()));
-  gh.factory<_i26.BooksSearchBloc>(() => _i26.BooksSearchBloc(
-        getBookById: get<_i17.GetBookByIdUsecase>(),
-        getBooksByTitleOrAuthor: get<_i19.GetBooksByTitleOrAuthorUsecase>(),
-      ));
-  gh.factory<_i27.BorrowBookBloc>(() => _i27.BorrowBookBloc(
+  gh.factory<_i30.BorrowingHistoryBloc>(() => _i30.BorrowingHistoryBloc(
+      getBorrowingHistoryUsecase: get<_i27.GetBorrowingHistoryUsecase>()));
+  gh.singleton<_i31.CurrentlyBorrowedBloc>(
+    _i31.CurrentlyBorrowedBloc(
+        getCurrentlyBorrowedBooksUsecase:
+            get<_i28.GetCurrentlyBorrowedBooksUsecase>()),
+    registerFor: {
+      _dev,
+      _prod,
+    },
+  );
+  gh.factory<_i32.BorrowBookBloc>(() => _i32.BorrowBookBloc(
         getBookWithAvailabilityUsecase:
-            get<_i18.GetBookWithAvailabilityUsecase>(),
-        borrowBookUsecase: get<_i16.BorrowBookUsecase>(),
+            get<_i25.GetBookWithAvailabilityUsecase>(),
+        borrowBookUsecase: get<_i23.BorrowBookUsecase>(),
+        currentlyBorrowedBloc: get<_i31.CurrentlyBorrowedBloc>(),
       ));
   return get;
 }
 
-class _$AppModule extends _i28.AppModule {}
+class _$AppModule extends _i33.AppModule {}
 
-class _$AuthModule extends _i29.AuthModule {}
+class _$AuthModule extends _i34.AuthModule {}

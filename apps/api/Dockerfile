@@ -8,12 +8,10 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-ENV PORT=3001
+ENV PORT=3000
 
-# RUN npm run build
+RUN yarn build
 
-EXPOSE 3001
+EXPOSE 3000
 
-# CMD [ "node", "dist/main.js" ]
-
-CMD [ "yarn", "start:dev" ]
+CMD [ "yarn", "start:prod" ]
